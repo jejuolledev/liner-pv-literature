@@ -3,7 +3,7 @@
 {% if not run %}<p>아직 돌린 검토가 없습니다. <a href="/">논문 모으기</a>에서 성분명을 넣고 돌려 주세요.</p>{% else %}
 <section class="intro">
   <h1>처리 기록 <span class="muted">· {{ run.id }}회차 검토, {{ rows|length }}편</span></h1>
-  <p>이번 검토에서 찾은 논문 전부를 남겼는지 뺐는지, 그 이유와 함께 적어 둡니다. 감사 때 CSV로 그대로 내보낼 수 있습니다.</p>
+  <p>이번 검토에서 찾은 논문 전부를 남겼는지 뺐는지, 그 이유와 함께 적어 둡니다. 「담당자 결정」 칸은 「담당자가 볼 논문」 화면에서 단추를 누르면 채워집니다. 감사 때 CSV로 그대로 내보낼 수 있습니다.</p>
   <a class="primary link-btn{{ ' breathe' if focus=='csv' and rows }}" href="/log.csv?run={{ run.id }}">CSV 내려받기</a>
   <span class="muted small">쓴 돈 ${{ '%.3f'|format(run.ledger.cost_usd or 0) }}, 학술 검색 {{ run.ledger.scholar_calls or 0 }}번, AI 판정 {{ run.ledger.mark_calls or 0 }}번</span>
 </section>
@@ -18,7 +18,7 @@
   <td>{{ p.date.raw or '-' }}{% if p.date.flag %}<br><span class="pill red">{{ p.date.flag }}</span>{% endif %}</td>
   <td>{{ p.verdict_ko }}</td>
   <td>{{ p.reason }}</td>
-  <td>{{ decisions.get(p.decision, '') }}</td>
+  <td>{% if p.decision %}<b>{{ decisions.get(p.decision, p.decision) }}</b>{% elif p.verdict in ('not_case','no_drug_name') %}<span class="muted small">뺀 논문이라 정할 것 없음</span>{% elif readonly %}<span class="muted small">아직 안 정함</span>{% else %}<a href="/remaining?run={{ run.id }}">아직 안 정함 → 정하러 가기</a>{% endif %}</td>
 </tr>
 {% else %}
 <tr><td colspan="6">이 검토는 새로 읽은 논문이 없어 기록할 논문이 없습니다. 아래 다른 검토의 처리 기록을 열어 주세요.</td></tr>
