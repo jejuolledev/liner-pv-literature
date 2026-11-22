@@ -276,3 +276,11 @@ def test_screen_words_plain():
                 t = open(os.path.join(dp, fn), encoding="utf-8").read()
                 for bad in ("에이전트", "남은 것", "본 목록", "—", "–", "미심쩍어"):
                     assert bad not in t, (fn, bad)
+
+
+def test_why_kept_shows_actual_age_phrase():
+    from app.main import why_kept
+    p = {"verdict": "check", "title": "A case", "abstract": "A 58-year-old male developed rash."}
+    j = {"age_cue": True, "model": {"doc_type": "other"}}
+    line = why_kept(p, j, True)
+    assert "58-year-old" in line and "54-year-old" not in line

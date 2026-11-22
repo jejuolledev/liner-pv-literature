@@ -99,6 +99,16 @@ def age_cue(*texts: str) -> bool:
     return any(_AGE_CUE.search(norm(t or "")) for t in texts)
 
 
+def age_phrase(*texts: str) -> str:
+    """초록·제목에서 처음 걸린 나이 표현(예: 「58-year-old」). 없으면 빈 문자열."""
+    from .verify import norm
+    for t in texts:
+        m = _AGE_CUE.search(norm(t or ""))
+        if m:
+            return m.group(0)
+    return ""
+
+
 def injection_flags(*texts: str) -> list[str]:
     hits = []
     for t in texts:

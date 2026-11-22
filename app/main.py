@@ -24,7 +24,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from markupsafe import Markup, escape
 
-from pvlit.judge import all_verified
+from pvlit.judge import age_phrase, all_verified
 from pvlit.liner import MARK_MODEL
 from pvlit.pipeline import KEEP, run_weekly
 from pvlit.search import BRAND_TEMPLATE, DEFAULT_DRUGS, QUERY_TEMPLATES, names_for
@@ -192,7 +192,8 @@ def why_kept(p: dict, j: dict, all_ok: bool) -> str:
         if j.get("injection"):
             why.append("초록에 AI에게 내리는 지시처럼 보이는 글이 있음")
         if j.get("age_cue"):
-            why.append("초록에 환자 나이 표현(예: 54-year-old)이 있음")
+            ph = age_phrase(p.get("title") or "", p.get("abstract") or "")
+            why.append(f"초록에 환자 나이 표현({ph})이 있음" if ph else "초록에 환자 나이 표현이 있음")
         if m.get("doc_type") in ("case_report", "case_series"):
             why.append("AI가 문서 종류를 증례 보고로 보고도 증례가 아니라고 함")
         return "AI는 증례가 아니라고 했지만 사람이 확인하도록 남겼습니다. 까닭: " + ", ".join(why or ["판정이 미심쩍음"]) + "."
