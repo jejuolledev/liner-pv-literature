@@ -34,7 +34,7 @@
     <li><b id="p-cost">${{ '%.3f'|format(run.ledger.cost_usd or 0) }}</b>쓴 돈</li>
   </ul>
   <p class="phase" id="p-phase">{{ run.stats.phase or '' }} {% if run.stats.judged %}· 판정 {{ run.stats.judged }}/{{ run.stats.new }}{% endif %} {% if run.stats.elapsed_sec %}· {{ run.stats.elapsed_sec }}초{% endif %}</p>
-  {% if run.status == 'done' and not run.stats.new %}<p class="alert">{% if run.stats.already_seen %}찾은 논문 {{ run.stats.found }}편이 모두 앞 검토에서 이미 본 것이라 이번에 새로 읽을 논문이 없습니다. 지난주에 본 논문을 다시 읽지 않는 기능이 일한 결과입니다. 처음 보는 성분을 넣으면 판정하는 모습을 볼 수 있습니다.{% elif run.stats.found %}찾은 논문 {{ run.stats.found }}편 모두 제목·초록에 성분명이 없어 판정 없이 뺐습니다(이유는 기록에).{% else %}지난 1년 사이 이 성분으로 찾은 논문이 없습니다. 철자를 확인해 주세요.{% endif %}</p>{% endif %}
+  {% if run.status == 'done' and not run.stats.new %}<p class="info">{% if run.stats.already_seen %}찾은 논문 {{ run.stats.found }}편이 모두 앞 검토에서 이미 본 것이라 이번에 새로 읽을 논문이 없습니다. 지난주에 본 논문을 다시 읽지 않는 기능이 일한 결과입니다. 처음 보는 성분을 넣으면 판정하는 모습을 볼 수 있습니다.{% elif run.stats.found %}찾은 논문 {{ run.stats.found }}편 모두 제목·초록에 성분명이 없어 판정 없이 뺐습니다(이유는 기록에).{% else %}지난 1년 사이 이 성분으로 찾은 논문이 없습니다. 철자를 확인해 주세요.{% endif %}</p>{% endif %}
   <ol class="log" id="p-log">{% for l in run.log[-6:] %}<li>{{ l }}</li>{% endfor %}</ol>
   <a class="primary link-btn" href="/remaining?run={{ run.id }}" id="p-go">남은 것 보기 →</a>
 </section>
