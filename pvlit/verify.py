@@ -78,23 +78,23 @@ def check_quotes(item: dict, title: str, abstract: str, drug_names: list[str]) -
     for key in ("patient_quote", "drug_quote", "event_quote"):
         q = (item.get(key) or "").strip()
         if not q:
-            res[key] = {"quote": "", "status": "missing", "where": None, "why": "에이전트가 찾지 못함 · 확인 안 됨"}
+            res[key] = {"quote": "", "status": "missing", "where": None, "why": "AI가 이 칸에 맞는 문장을 찾지 못했습니다. 원문을 직접 봐 주세요."}
             continue
         span_a = find_span(q, abstract or "")
         span_t = None if span_a else find_span(q, title or "")
         if not (span_a or span_t):
-            res[key] = {"quote": q, "status": "unverified", "where": None, "why": "초록에서 글자로 확인 안 됨"}
+            res[key] = {"quote": q, "status": "unverified", "where": None, "why": "초록에서 같은 글자를 찾지 못했습니다(AI가 바꿔 썼을 수 있음)."}
             continue
         status, why = "ok", ""
         nq = norm(q)
         names = [norm(d) for d in drug_names if d]
         if key == "drug_quote":
             if not any(d in nq for d in names):
-                status, why = "unverified", "원문에 있지만 이 문장에 성분명이 없음"
+                status, why = "unverified", "원문에 있는 문장이지만 성분명이 들어 있지 않습니다."
             elif nq in names:
-                status, why = "unverified", "성분명만 있고 투여 내용이 없음(너무 짧음)"
+                status, why = "unverified", "성분명만 있고 약을 쓴 내용이 없습니다(너무 짧음)."
         elif key == "patient_quote" and not _PATIENT_CUE.search(nq):
-            status, why = "unverified", "원문에 있지만 환자를 가리키는 말(나이·성별·환자)이 없음"
+            status, why = "unverified", "원문에 있는 문장이지만 환자를 가리키는 말(나이, 성별, patient 등)이 없습니다."
         res[key] = {"quote": q, "status": status, "why": why,
                     "where": "abstract" if span_a else "title", "span": span_a or span_t}
     return res

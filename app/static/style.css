@@ -75,3 +75,34 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .login-form label{display:grid;gap:4px;font-weight:500}
 .login-form input{font:inherit;padding:10px 12px;border:1px solid #ccd;border-radius:8px}
 .info{background:#eaf4ef;border:1px solid #cfe5da;color:#1d4d3a;border-radius:8px;padding:10px 12px;margin:12px 0}
+.lead{color:var(--ink)!important}
+ul.summary{list-style:none;margin:0 0 12px;display:grid;gap:2px;font-size:15px}
+ul.summary li::before{content:"· ";color:var(--muted)}
+.why{font-size:14px;margin:0 0 8px;background:#f1f6f4;border-radius:6px;padding:6px 10px}
+.why b{color:var(--accent)}
+/* 작동 방식: 흐름 그림 */
+.flow{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(5,1fr);gap:22px;counter-reset:st}
+.stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 12px;display:flex;flex-direction:column;gap:4px}
+.stage:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:34px;font-size:18px;color:var(--muted)}
+.stage .k{font-size:12px;color:var(--muted);font-weight:500}
+.stage .n{font-size:28px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.stage .n small{font-size:14px;font-weight:500;margin-left:2px}
+.stage .t{font-weight:700;font-size:15px;line-height:1.35}
+.stage .d{font-size:13px;color:var(--muted);line-height:1.5}
+.stage .out{margin-top:auto;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px}
+.stage.end{border:2px solid var(--accent);background:#f1f6f4}.stage.end .n{color:var(--accent)}
+.flow-src{font-size:13px;color:var(--muted);margin:0 0 20px}
+.steps{padding-left:20px;margin:8px 0 18px}.steps li{margin-bottom:8px}
+.qs{margin:6px 0 0;padding-left:18px;font-size:13px}.qs code{background:#eef1f3;padding:1px 6px;border-radius:4px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin:6px 0 14px}
+.legend span q{quotes:none;background:var(--yellow);padding:0 4px}.legend span.bad q{background:var(--red-bg);color:var(--red)}
+.measure{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 18px 10px;margin-bottom:18px}
+@media (max-width:760px){.flow{grid-template-columns:1fr;gap:20px}.stage:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-21px}}
+/* 다음에 누를 곳 한 군데: 테두리가 숨쉬듯 천천히 커졌다 작아집니다 */
+@keyframes pv-breathe{0%,100%{box-shadow:0 0 0 2px rgba(15,92,77,.85)}50%{box-shadow:0 0 0 8px rgba(15,92,77,.22)}}
+.breathe{animation:pv-breathe 3.6s ease-in-out infinite}
+form.decide.breathe{border-radius:8px;padding:6px}
+@media (prefers-reduced-motion:reduce){.breathe{animation:none;box-shadow:0 0 0 3px rgba(15,92,77,.7)}}
+.next{background:#eaf4ef;border:1px solid #cfe5da;color:#1d4d3a;border-radius:8px;padding:8px 12px;margin:16px 0 0;font-size:14px}
+.stage .n em{display:block;font-style:normal;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:2px}
+.log-table td:nth-child(4){white-space:nowrap}

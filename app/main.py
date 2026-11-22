@@ -1,4 +1,4 @@
-"""화면 3개: 이번 주 검토(/), 남은 것(/remaining), 기록(/log). FastAPI 한 개.
+"""화면 4개: 작동 방식(/how), 논문 모으기(/), 담당자가 볼 논문(/remaining), 처리 기록(/log). FastAPI 한 개.
 
 실행: LINER_API_KEY=... uvicorn app.main:app --port 8000
 """
@@ -27,7 +27,7 @@ from markupsafe import Markup, escape
 from pvlit.judge import all_verified
 from pvlit.liner import MARK_MODEL
 from pvlit.pipeline import KEEP, run_weekly
-from pvlit.search import DEFAULT_DRUGS, names_for
+from pvlit.search import BRAND_TEMPLATE, DEFAULT_DRUGS, QUERY_TEMPLATES, names_for
 from pvlit.store import DECISIONS, DEFAULT_DB, Store
 from pvlit.verify import check_quotes
 
@@ -154,7 +154,7 @@ async def http_error(request: Request, exc: StarletteHTTPException):
     if request.url.path.startswith("/api/"):
         return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
     msg = exc.detail if isinstance(exc.detail, str) and exc.detail not in ("Not Found", "Bad Request") else \
-        {404: "찾는 화면이나 논문이 없습니다.", 400: "입력이 올바르지 않습니다."}.get(exc.status_code, "요청을 처리하지 못했습니다.")
+        {404: "찾는 화면이나 논문이 없습니다.", 400: "입력한 값을 확인해 주세요."}.get(exc.status_code, "요청을 처리하지 못했습니다.")
     return tpl.TemplateResponse(request, "error.html", {"msg": msg, "code": exc.status_code, "page": "", "run": None},
                                 status_code=exc.status_code)
 
@@ -162,8 +162,8 @@ async def http_error(request: Request, exc: StarletteHTTPException):
 @app.exception_handler(RequestValidationError)
 async def form_error(request: Request, exc: RequestValidationError):
     if request.url.path.startswith("/api/"):
-        return JSONResponse({"detail": "입력이 올바르지 않습니다."}, status_code=422)
-    return tpl.TemplateResponse(request, "error.html", {"msg": "입력이 올바르지 않습니다.", "code": 422, "page": "", "run": None},
+        return JSONResponse({"detail": "입력한 값을 확인해 주세요."}, status_code=422)
+    return tpl.TemplateResponse(request, "error.html", {"msg": "입력한 값을 확인해 주세요.", "code": 422, "page": "", "run": None},
                                 status_code=422)
 
 
@@ -175,6 +175,29 @@ def healthz():
 _DRUG_RE = re.compile(r"^[A-Za-z][A-Za-z\- ]{2,39}$")
 
 FIELD_LABEL = {"patient_quote": "환자", "drug_quote": "의심 약", "event_quote": "부작용"}
+STATUS_KO = {"ok": "확인됨", "unverified": "확인 안 됨", "missing": "못 찾음"}
+# 옛 회차(견본 DB)에 저장된 진행 단계 이름을 새 화면 말로 바꿔 보여 준다.
+PHASE_KO = {"검색 중": "논문 찾는 중", "판정 중": "AI가 읽는 중", "끝": "끝남"}
+tpl.env.globals["phase_ko"] = lambda ph: PHASE_KO.get(ph or "", ph or "")
+NO_DRUG_REASON = "제목과 초록에 성분명이 없어 AI에게 보내지 않고 코드가 뺐습니다. 다음 검토에서 다시 확인합니다."
+
+
+def why_kept(p: dict, j: dict, all_ok: bool) -> str:
+    """카드가 담당자 목록에 남은 까닭을 한 줄로(pvlit.judge.verdict 와 같은 조건)."""
+    if p["verdict"] == "error":
+        return f"AI가 판정하지 못해서 남겼습니다({j.get('error') or '이유 없음'}). 초록을 직접 읽어 주세요."
+    m = j.get("model") or {}
+    if p["verdict"] == "check":
+        why = []
+        if j.get("injection"):
+            why.append("초록에 AI에게 내리는 지시처럼 보이는 글이 있음")
+        if j.get("age_cue"):
+            why.append("초록에 환자 나이 표현(예: 54-year-old)이 있음")
+        if m.get("doc_type") in ("case_report", "case_series"):
+            why.append("AI가 문서 종류를 증례 보고로 보고도 증례가 아니라고 함")
+        return "AI는 증례가 아니라고 했지만 사람이 확인하도록 남겼습니다. 까닭: " + ", ".join(why or ["판정이 미심쩍음"]) + "."
+    base = "AI가 환자, 의심 약, 부작용이 나오는 개별 증례로 판정했습니다."
+    return base + ("" if all_ok else " 다만 근거 칸 일부가 초록 원문에서 확인되지 않았으니 원문을 직접 봐 주세요.")
 
 
 DEFAULT_RUN = int(os.environ.get("PV_DEFAULT_RUN", "0") or 0)  # 견본판: 처음 보여 줄 회차(0이면 최신)
@@ -214,10 +237,12 @@ def card(p: dict, started: str) -> dict:
         if c.get("status") == "ok" and c.get("span"):
             (spans_a if c["where"] == "abstract" else spans_t).append((c["span"][0], c["span"][1], k))
     found = dt.date.fromisoformat(started[:10])
+    ok = all_verified(j)
     return {
         **p,
+        "why_kept": why_kept(p, j, ok),
         "fields": fields,
-        "all_ok": all_verified(j),
+        "all_ok": ok,
         "abstract_html": highlight(p["abstract"] or "", spans_a),
         "title_html": highlight(p["title"] or "", spans_t),
         "reason": (j.get("model") or {}).get("reason_ko") or j.get("error") or "",
@@ -231,9 +256,29 @@ def card(p: dict, started: str) -> dict:
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request, run: int | None = None):
     r = _run_or_latest(run)
+    # 다음에 누를 곳 한 군데(숨쉬는 테두리)와 「다음」 한 줄
+    if r and r["status"] == "running":
+        focus, nxt = "", "AI가 논문을 읽는 중입니다. 끝나면 「담당자가 볼 논문 보기」 단추로 넘어가 주세요."
+    elif r and (READONLY or (r["stats"] or {}).get("new")):
+        focus, nxt = "go", f"{r['id']}회차 검토가 끝났습니다. 「담당자가 볼 논문 보기」를 눌러 AI가 남긴 논문을 확인해 주세요."
+    else:
+        focus, nxt = "run", "성분명을 넣고 「논문 찾아서 읽기」를 눌러 주세요. 처음 보는 성분이면 AI가 새 논문을 읽는 모습을 볼 수 있습니다."
     return tpl.TemplateResponse(request, "home.html", {
+        "focus": focus, "next_hint": nxt,
         "run": r, "drugs": (_dd or list(DEFAULT_DRUGS))[:3], "limit": DAILY_LIMIT, "today": store.runs_today(),
         "seen": store.seen_count(), "page": "home", "readonly": READONLY, "max_judge": MAX_JUDGE,
+    })
+
+
+@app.get("/how", response_class=HTMLResponse)
+def how(request: Request, run: int | None = None):
+    """작동 방식. 흐름 그림의 숫자는 실제 회차 기록에서 가져온다(새로 읽은 논문이 있는 가장 최근 회차)."""
+    r = store.get_run(run) if run else None
+    if not r or not (r["stats"] or {}).get("new"):
+        r = next((x for x in store.runs() if (x["stats"] or {}).get("new")), None)
+    return tpl.TemplateResponse(request, "how.html", {
+        "flow": r, "page": "how", "run": None, "days": REPORT_DAYS,
+        "queries": [t.format(d="성분명") for t in QUERY_TEMPLATES], "brand_query": BRAND_TEMPLATE.format(b="상품명"),
     })
 
 
@@ -246,11 +291,11 @@ def start_run(drug1: str = Form(""), drug2: str = Form(""), drug3: str = Form(""
         if not _DRUG_RE.match(d):
             raise HTTPException(400, f"「{d}」는 쓸 수 없습니다. 성분명은 영문 3~40자(글자·띄어쓰기·하이픈)로 넣어 주세요. 예: clozapine")
     if READONLY:
-        raise HTTPException(403, "읽기 전용 데모입니다.")
+        raise HTTPException(403, "견본 화면이라 돌리기가 꺼져 있습니다. 직접 돌리려면 README의 실행 방법대로 라이너 키를 넣고 띄워 주세요.")
     if store.runs_today() >= DAILY_LIMIT:
-        raise HTTPException(429, f"오늘 돌릴 수 있는 {DAILY_LIMIT}번을 다 썼습니다. 이미 돌린 결과는 「남은 것」「기록」에서 볼 수 있습니다.")
+        raise HTTPException(429, f"오늘 돌릴 수 있는 {DAILY_LIMIT}번을 다 썼습니다. 이미 돌린 결과는 「담당자가 볼 논문」과 「처리 기록」에서 볼 수 있습니다.")
     if not _run_lock.acquire(blocking=False):
-        raise HTTPException(409, "지금 다른 검토가 돌고 있습니다(한 번에 하나만 돕니다). 첫 화면에서 진행을 볼 수 있고, 끝나면 1~2분 뒤 다시 눌러 주세요.")
+        raise HTTPException(409, "지금 다른 검토가 돌고 있습니다. 한 번에 하나만 돌 수 있습니다. 「논문 모으기」 화면에서 진행 상황을 볼 수 있으니 끝난 뒤 다시 눌러 주세요.")
     try:
         drugs = {d: names_for(d) for d in dict.fromkeys(names)}
         run_id = store.new_run(list(drugs))
@@ -289,7 +334,15 @@ def remaining(request: Request, run: int | None = None):
         dropped = len(store.papers(r["id"], ("not_case", "no_drug_name")))
     order = {"error": 0, "check": 1, "candidate": 2}
     cards.sort(key=lambda c: (c["decision"] not in (None, "later"), c["found"], c["all_ok"], order.get(c["verdict"], 3), c["drug"]))
+    open_i = next((i for i, c in enumerate(cards) if not c["decision"]), None)
+    if READONLY:
+        focus, nxt = "log", "견본 화면이라 결정 단추는 꺼져 있습니다. 카드에서 「왜 남았나」와 노란 칸을 읽어 본 뒤, 뺀 논문은 「처리 기록 보기」에서 확인해 주세요."
+    elif open_i is not None:
+        focus, nxt = f"card{open_i}", "맨 위 카드부터 「왜 남았나」와 노란 칸을 읽고 「보고 대상」 또는 「보고 대상 아님」을 눌러 주세요."
+    else:
+        focus, nxt = "log", "모든 카드를 정했습니다. 「처리 기록 보기」에서 결정을 확인하고 CSV로 내려받아 주세요."
     return tpl.TemplateResponse(request, "remaining.html", {
+        "focus": focus, "next_hint": nxt if r else "",
         "run": r, "cards": cards, "decisions": DECISIONS, "page": "remaining", "days": REPORT_DAYS, "dropped": dropped,
         "all_runs": not run, "readonly": READONLY,
     })
@@ -299,7 +352,7 @@ def remaining(request: Request, run: int | None = None):
 def decide(run_id: int = Form(...), drug: str = Form(...), key: str = Form(...), decision: str = Form(...),
            note: str = Form(""), back: str = Form("")):
     if READONLY:
-        raise HTTPException(403, "읽기 전용 데모입니다.")
+        raise HTTPException(403, "견본 화면이라 결정 단추가 꺼져 있습니다.")
     if decision not in DECISIONS:
         raise HTTPException(400)
     if not store.get_paper(run_id, drug, key):
@@ -308,19 +361,40 @@ def decide(run_id: int = Form(...), drug: str = Form(...), key: str = Form(...),
     return RedirectResponse(f"/remaining?run={run_id}" if back == "run" else "/remaining", status_code=303)
 
 
-VERDICT_KO = {"candidate": "남김(증례 후보)", "check": "남김(확인 필요)", "not_case": "뺌(증례 아님)",
-              "no_drug_name": "뺌(성분명 없음, 다음 주 다시 봄)", "error": "남김(판정 못 함)"}
+VERDICT_KO = {"candidate": "남김: 증례", "check": "남김: 확인 필요", "not_case": "뺌: 증례 아님",
+              "no_drug_name": "뺌: 성분명 없음", "error": "남김: AI 판정 실패"}
+
+
+def log_reason(p: dict) -> str:
+    """처리 기록의 「남기거나 뺀 이유」. AI가 적은 한 줄 앞에 무엇을 했는지 붙인다."""
+    j = p["judgment"] or {}
+    if p["verdict"] == "no_drug_name":
+        return NO_DRUG_REASON
+    ai = (j.get("model") or {}).get("reason_ko") or ""
+    if p["verdict"] == "not_case":
+        return "AI가 개별 증례가 아니라고 판정했습니다." + (f" AI가 적은 이유: {ai}" if ai else "")
+    if p["verdict"] == "error":
+        return f"AI가 판정하지 못해 담당자 목록에 남겼습니다({j.get('error') or j.get('reason') or '이유 없음'})."
+    return why_kept(p, j, all_verified(j)) + (f" AI가 적은 이유: {ai}" if ai else "")
 
 
 @app.get("/log", response_class=HTMLResponse)
 def log(request: Request, run: int | None = None):
     r = _run_or_latest(run)
     rows = store.papers(r["id"]) if r else []
+    if r and not rows and not run:  # 기본으로 여는 회차가 비었으면 기록이 있는 가장 최근 회차를 연다
+        for x in store.runs():
+            if store.papers(x["id"]):
+                r, rows = x, store.papers(x["id"])
+                break
     for p in rows:
         j = p["judgment"] or {}
-        p["reason"] = (j.get("model") or {}).get("reason_ko") or j.get("reason") or j.get("error") or ""
+        if j.get("model"):
+            j["checks"] = check_quotes(j["model"], p["title"], p["abstract"], names_for(p["drug"]))
+        p["reason"] = log_reason(p)
         p["verdict_ko"] = VERDICT_KO.get(p["verdict"], p["verdict"])
     return tpl.TemplateResponse(request, "log.html", {
+        "focus": "csv", "next_hint": "결정까지 끝났으면 「CSV 내려받기」로 이번 검토 기록을 받아 두세요. 감사 때 그대로 낼 수 있습니다." if r else "",
         "run": r, "rows": rows, "runs": store.runs()[:20], "page": "log", "decisions": DECISIONS,
     })
 
@@ -343,17 +417,17 @@ def log_csv(run: int):
     buf = io.StringIO()
     buf.write("﻿")
     w = _SafeWriter(csv.writer(buf))
-    w.writerow(["검색일", "성분", "제목", "주소", "발행일(라이너 표기)", "날짜 표시", "에이전트 판단", "이유",
-                "환자 문장", "의심 약 문장", "부작용 문장", "원문 확인", "사람 결정", "결정 시각", "메모", "찾은 질의",
+    w.writerow(["검색일", "성분", "제목", "주소", "발행일(라이너 표기)", "날짜 표시", "처리", "남기거나 뺀 이유",
+                "환자 문장", "의심 약 문장", "부작용 문장", "원문 대조", "담당자 결정", "결정 시각", "메모", "찾은 검색어",
                 "검색 범위", "판정 모델", "프롬프트 버전", "초록 원문"])
     for p in store.papers(r["id"]):
         j = p["judgment"] or {}
         c = j.get("checks") or {}
         q = lambda k: (c.get(k) or {}).get("quote", "")
-        st = ",".join(f"{FIELD_LABEL[k]}:{(c.get(k) or {}).get('status', '-')}" for k in FIELD_LABEL)
+        st = ", ".join(f"{FIELD_LABEL[k]} {STATUS_KO.get((c.get(k) or {}).get('status'), '-')}" for k in FIELD_LABEL)
         w.writerow([r["started"][:10], p["drug"], p["title"], p["url"], (p["date"] or {}).get("raw"),
                     (p["date"] or {}).get("flag") or "", VERDICT_KO.get(p["verdict"], p["verdict"]),
-                    (j.get("model") or {}).get("reason_ko") or j.get("reason") or j.get("error") or "",
+                    log_reason(p),
                     q("patient_quote"), q("drug_quote"), q("event_quote"), st if c else "",
                     DECISIONS.get(p["decision"], ""), p["decided_at"] or "", p["note"] or "", " / ".join(p["queries"] or []),
                     "라이너 학술 검색 past_year", j.get("model_name") or (MARK_MODEL if j.get("model") else ""),

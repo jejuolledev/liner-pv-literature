@@ -2,43 +2,43 @@
 {% block body %}
 <section class="intro">
   <h1>이번 주 부작용 논문, 보고할 것만 남겨 드립니다</h1>
-  <p>자사 약 성분명을 넣고 돌리면, 지난주까지 본 논문은 빼고 새 논문만 읽습니다. 환자·의심 약·부작용이 나오는 증례와 사람이 확인해야 할 논문만 「남은 것」으로 넘어갑니다.</p>
+  <p>자사 약 성분명을 넣으면 AI가 지난 1년 사이 나온 논문을 찾아 한 편씩 읽습니다. 지난번에 읽은 논문은 다시 읽지 않습니다. 식약처 보고 대상일 수 있는 증례(환자, 의심 약, 부작용이 나오는 논문)와 사람이 확인해야 할 논문만 「담당자가 볼 논문」으로 넘깁니다. <a href="/how">어떻게 걸러지는지 보기</a></p>
 </section>
 
 <form class="run-form" method="post" action="/run">
-  <label>성분명(영문) 최대 3개</label>
+  <label>자사 약 성분명(영문, 3개까지)</label>
   <div class="drugs">
     {% for i in range(3) %}
-    <input name="drug{{ i+1 }}" value="{{ drugs[i] if i < drugs|length else '' }}" maxlength="40" autocomplete="off" pattern="[A-Za-z][A-Za-z\- ]{2,39}" title="영문 성분명 3~40자(예: clozapine)" placeholder="{{ '비워 두면 빼고 돌립니다' if i else '예: clozapine' }}">
+    <input name="drug{{ i+1 }}" value="{{ drugs[i] if i < drugs|length else '' }}" maxlength="40" autocomplete="off" pattern="[A-Za-z][A-Za-z\- ]{2,39}" title="영문 성분명 3~40자(예: clozapine)" placeholder="{{ '비워 둬도 됩니다' if i else '예: clozapine' }}">
     {% endfor %}
   </div>
-  <button type="submit" class="primary" {{ 'disabled' if readonly }}>돌리기</button>
-  <p class="hint">성분마다 학술 검색 6~7번(성분 3개면 19번)과 새 논문 수만큼 판정을 합니다. {% if readonly %}견본 화면이라 돌리기는 꺼져 있습니다. 아래 견본 검토 #1은 질의를 늘리기 전(성분마다 4개, 검색 12번)에 돈 결과입니다.{% else %}오늘 {{ today }} / {{ limit }}번 돌렸습니다.{% endif %}</p>
+  <button type="submit" class="primary{{ ' breathe' if focus=='run' }}" {{ 'disabled' if readonly }}>논문 찾아서 읽기</button>
+  <p class="hint">성분 하나에 학술 검색을 5~7번 하고(검색어 5개, 상품명을 아는 약은 2개 더), 새 논문마다 AI가 한 번씩 판정합니다. {% if readonly %}견본 화면이라 이 단추는 꺼져 있습니다. 아래 1회차 검토는 검색어를 늘리기 전(성분마다 4개, 검색 12번)에 돌린 결과입니다.{% else %}오늘 {{ today }}번 돌렸습니다(하루 {{ limit }}번까지).{% endif %}</p>
 </form>
 
 {% if run %}
 <section class="progress" id="progress" data-run="{{ run.id }}" data-status="{{ run.status }}">
   <div class="prog-head">
-    <h2>검토 #{{ run.id }} <span class="muted">{{ run.started[:16].replace('T',' ') }} · {{ run.drugs|join(', ') }}</span></h2>
-    <span class="badge {{ run.status }}" id="p-status">{{ {'running':'도는 중','done':'끝','failed':'실패','partial':'일부 실패'}.get(run.status, run.status) }}</span>
+    <h2>{{ run.id }}회차 검토 <span class="muted">{{ run.started[:16].replace('T',' ') }}, {{ run.drugs|join(', ') }}</span></h2>
+    <span class="badge {{ run.status }}" id="p-status">{{ {'running':'진행 중','done':'끝남','failed':'실패','partial':'일부 실패'}.get(run.status, run.status) }}</span>
   </div>
-  {% if run.status in ('partial','failed') %}<p class="alert">{% if run.status=='failed' %}이번 검토가 실패했습니다.{% else %}검색 {{ run.stats.search_failures or 0 }}번·판정 {{ run.stats.errors or 0 }}편이 실패했습니다.{% endif %} 결과가 빠졌을 수 있으니 기록을 보고 다시 돌려 주세요. {{ run.log[-1] if run.log }}</p>{% endif %}
-  {% if run.stats.deferred %}<p class="alert">판정 상한 {{ max_judge }}편을 넘은 {{ run.stats.deferred }}편은 다음 회차에서 읽습니다.</p>{% endif %}
+  {% if run.status in ('partial','failed') %}<p class="alert">{% if run.status=='failed' %}이번 검토가 실패했습니다.{% else %}검색 {{ run.stats.search_failures or 0 }}번과 판정 {{ run.stats.errors or 0 }}편이 실패했습니다.{% endif %} 빠진 논문이 있을 수 있으니 「처리 기록」을 확인하고 다시 돌려 주세요. {{ run.log[-1] if run.log }}</p>{% endif %}
+  {% if run.stats.deferred %}<p class="alert">한 번에 읽는 상한 {{ max_judge }}편을 넘은 {{ run.stats.deferred }}편은 다음 검토에서 읽습니다.</p>{% endif %}
   <div class="bar"><div class="fill" id="p-fill"></div></div>
   <ul class="nums">
-    <li><b id="p-search">{{ run.ledger.scholar_calls or 0 }}</b>학술 검색</li>
+    <li><b id="p-search">{{ run.ledger.scholar_calls or 0 }}</b>학술 검색 횟수</li>
     <li><b id="p-found">{{ run.stats.found or 0 }}</b>찾은 논문</li>
-    <li><b id="p-seen">{{ run.stats.already_seen or 0 }}</b>지난번에 본 것</li>
-    <li><b id="p-new">{{ run.stats.new or 0 }}</b>새로 읽을 것</li>
-    <li class="hl"><b id="p-cand">{{ (run.stats.candidates or 0) + (run.stats.check or 0) + (run.stats.errors or 0) }}</b>남은 것</li>
-    <li><b id="p-cost">${{ '%.3f'|format(run.ledger.cost_usd or 0) }}</b>쓴 돈</li>
+    <li><b id="p-seen">{{ run.stats.already_seen or 0 }}</b>이미 읽어서 건너뜀</li>
+    <li><b id="p-new">{{ run.stats.new or 0 }}</b>새로 읽을 논문</li>
+    <li class="hl"><b id="p-cand">{{ (run.stats.candidates or 0) + (run.stats.check or 0) + (run.stats.errors or 0) }}</b>담당자가 볼 논문</li>
+    <li><b id="p-cost">${{ '%.3f'|format(run.ledger.cost_usd or 0) }}</b>쓴 돈(라이너 크레딧)</li>
   </ul>
-  <p class="phase" id="p-phase">{{ run.stats.phase or '' }} {% if run.stats.judged %}· 판정 {{ run.stats.judged }}/{{ run.stats.new }}{% endif %} {% if run.stats.elapsed_sec %}· {{ run.stats.elapsed_sec }}초{% endif %}</p>
-  {% if run.status == 'done' and not run.stats.new %}<p class="info">{% if run.stats.already_seen %}찾은 논문 {{ run.stats.found }}편이 모두 앞 검토에서 이미 본 것이라 이번에 새로 읽을 논문이 없습니다. 지난주에 본 논문을 다시 읽지 않는 기능이 일한 결과입니다. 처음 보는 성분을 넣으면 판정하는 모습을 볼 수 있습니다.{% elif run.stats.found %}찾은 논문 {{ run.stats.found }}편 모두 제목·초록에 성분명이 없어 판정 없이 뺐습니다(이유는 기록에).{% else %}지난 1년 사이 이 성분으로 찾은 논문이 없습니다. 철자를 확인해 주세요.{% endif %}</p>{% endif %}
+  <p class="phase" id="p-phase">{{ phase_ko(run.stats.phase) }}{% if run.stats.judged %}, AI가 읽은 논문 {{ run.stats.judged }}/{{ run.stats.new }}{% endif %}{% if run.stats.elapsed_sec %}, {{ run.stats.elapsed_sec }}초{% endif %}</p>
+  {% if run.status == 'done' and not run.stats.new %}<p class="info">{% if run.stats.already_seen %}찾은 논문 {{ run.stats.found }}편을 모두 앞 검토에서 이미 읽어서 이번에 새로 읽을 논문이 없습니다. 읽은 논문을 다시 읽지 않기 때문입니다. 처음 보는 성분을 넣으면 AI가 논문을 읽는 모습을 볼 수 있습니다.{% elif run.stats.found %}찾은 논문 {{ run.stats.found }}편 모두 제목과 초록에 성분명이 없어 AI에게 보내지 않고 뺐습니다. 이유는 「처리 기록」에 있습니다.{% else %}지난 1년 사이 이 성분으로 찾은 논문이 없습니다. 철자를 확인해 주세요.{% endif %}</p>{% endif %}
   <ol class="log" id="p-log">{% for l in run.log[-6:] %}<li>{{ l }}</li>{% endfor %}</ol>
-  <a class="primary link-btn" href="/remaining?run={{ run.id }}" id="p-go">남은 것 보기 →</a>
+  <a class="primary link-btn{{ ' breathe' if focus=='go' }}" href="/remaining?run={{ run.id }}" id="p-go">담당자가 볼 논문 보기 →</a>
 </section>
 {% endif %}
-<p class="muted small">지금까지 본 논문 {{ seen }}편이 「본 목록」에 있습니다. 다음 주에는 이 목록을 빼고 읽습니다.</p>
+<p class="muted small">지금까지 읽은 논문 {{ seen }}편을 기억해 두었습니다. 다음 검토에서는 이 논문들을 다시 읽지 않습니다.</p>
 <script src="/static/progress.js"></script>
 {% endblock %}

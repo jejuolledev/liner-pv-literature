@@ -73,11 +73,11 @@ def test_open_cards_survive_new_run(app_mod):
     app_mod.store.update_run(app_mod.store.new_run(["atorvastatin"]), status="done")  # 새 회차(빈)
     c = TestClient(app_mod.app)
     html = c.get("/remaining").text
-    assert "남은 것 1편" in html
+    assert "담당자가 볼 논문 1편" in html
     c.post("/decide", data={"run_id": rid, "drug": "atorvastatin", "key": "doi:1", "decision": "later"})
-    assert "남은 것 1편" in c.get("/remaining").text  # 나중에 는 남는다
+    assert "담당자가 볼 논문 1편" in c.get("/remaining").text  # 나중에 는 남는다
     c.post("/decide", data={"run_id": rid, "drug": "atorvastatin", "key": "doi:1", "decision": "not_report", "note": "-x"})
-    assert "남은 것 0편" in c.get("/remaining").text
+    assert "담당자가 볼 논문 0편" in c.get("/remaining").text
     assert len(app_mod.store.decision_history(rid, "atorvastatin", "doi:1")) == 2
 
 def test_csv_tab_prefix_and_limits(app_mod, monkeypatch):
@@ -126,7 +126,7 @@ def test_seed_db_copied_once(tmp_path, monkeypatch):
     m = _fresh(monkeypatch, tmp_path, PV_SEED_DB=seed_db, PV_READONLY="1", PV_DEFAULT_RUN="1")
     c = TestClient(m.app)
     assert len(m.store.runs()) == 2
-    assert "검토 #1" in c.get("/").text
+    assert "1회차 검토" in c.get("/").text
     assert c.get("/remaining").status_code == 200 and c.get("/log").status_code == 200
 
 
@@ -173,7 +173,7 @@ def test_readonly_buttons_disabled_and_unknown_run_falls_back(tmp_path, monkeypa
     c = TestClient(m.app)
     html = c.get("/remaining").text
     assert "disabled>보고 대상" in html.replace('class="primary" disabled>', "disabled>")
-    assert f"검토 #{rid}" in c.get("/?run=99").text
+    assert f"{rid}회차 검토" in c.get("/?run=99").text
     assert c.get("/docs").status_code == 404 and c.get("/openapi.json").status_code == 404
 
 
@@ -231,8 +231,8 @@ def test_zero_new_papers_explained(app_mod):
     rid = app_mod.store.new_run(["atorvastatin"])
     app_mod.store.update_run(rid, status="done", stats={"found": 40, "already_seen": 40, "new": 0, "phase": "끝"})
     c = TestClient(app_mod.app)
-    assert "모두 앞 검토에서 이미 본 것" in c.get(f"/?run={rid}").text
-    assert "모두 앞 검토에서 본 것" in c.get(f"/remaining?run={rid}").text
+    assert "모두 앞 검토에서 이미 읽어서" in c.get(f"/?run={rid}").text
+    assert "모두 앞 검토에서 이미 읽어서" in c.get(f"/remaining?run={rid}").text
 
 
 def test_interrupted_run_shows_reason(tmp_path, monkeypatch):
@@ -242,3 +242,37 @@ def test_interrupted_run_shows_reason(tmp_path, monkeypatch):
     r = m2.store.get_run(rid)
     assert r["status"] == "failed" and "다시 시작" in r["log"][-1]
     assert "다시 시작되어 멈췄습니다" in TestClient(m2.app).get(f"/?run={rid}").text
+
+
+def test_how_page_flow_uses_real_run_numbers(app_mod):
+    rid = app_mod.store.new_run(["atorvastatin"])
+    app_mod.store.update_run(rid, status="done", stats={"searches": 6, "found": 77, "already_seen": 0, "no_drug_name": 21,
+                                                        "new": 56, "judged": 56, "candidates": 25, "check": 5, "errors": 0, "not_case": 26})
+    html = TestClient(app_mod.app).get("/how").text
+    for n in ("77<small>", "56<small>", "30<small>", "뺌 21편", "증례 아님으로 뺌 26편", f"{rid}회차 검토"):
+        assert n in html, n
+    assert "사람 확인 전" in html
+
+
+def test_card_says_why_kept_and_next_button_breathes(app_mod):
+    from tests.fakes import ABS_CASE
+    rid = seed(app_mod, "t", "https://doi.org/10.1/a", ABS_CASE)
+    c = TestClient(app_mod.app)
+    html = c.get(f"/remaining?run={rid}").text
+    assert "왜 남았나" in html and "개별 증례로 판정했습니다" in html
+    assert 'class="decide breathe"' in html and "다음:" in html
+    c.post("/decide", data={"run_id": rid, "drug": "atorvastatin", "key": "doi:1", "decision": "report"})
+    html = c.get(f"/remaining?run={rid}").text
+    assert 'class="decide breathe"' not in html and "link-btn breathe" in html  # 다 정하면 처리 기록으로
+    assert "link-btn breathe" in c.get(f"/log?run={rid}").text
+
+
+def test_screen_words_plain():
+    """화면 글에 내부 용어와 줄표를 쓰지 않는다."""
+    root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "app")
+    for dp, _, fns in os.walk(root):
+        for fn in fns:
+            if fn.endswith((".html", ".js")):
+                t = open(os.path.join(dp, fn), encoding="utf-8").read()
+                for bad in ("에이전트", "남은 것", "본 목록", "—", "–", "미심쩍어"):
+                    assert bad not in t, (fn, bad)
