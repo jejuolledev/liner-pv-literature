@@ -81,7 +81,9 @@ docker run -p 127.0.0.1:8080:8080 -e LINER_API_KEY -e PV_SEED_DB= pv-lit        
 | `PV_DEFAULT_RUN` | 최신 회차 | 처음 보여 줄 검토 번호(견본판용. 직접 돌리는 판에서는 비워 둡니다) |
 | `PV_DAILY_RUN_LIMIT` | 20 | 하루 돌리기 횟수 한도. 동시에 한 검토만 돕니다 |
 | `PV_MAX_JUDGE_PER_RUN` | 150 | 한 회차 판정 상한(넘는 논문은 본 목록에 넣지 않고 다음 회차에 읽음) |
-| `PV_BASIC_USER` / `PV_BASIC_PASS` | 없음 | 둘 다 넣으면 모든 화면에 로그인 창(비공개 운영판) |
+| `PV_BASIC_USER` / `PV_BASIC_PASS` | 없음 | 둘 다 넣으면 모든 화면 앞에 로그인 화면(아이디·비밀번호 → 14일 쿠키). 명령줄은 `curl -u 아이디:비밀번호`도 됩니다 |
+| `PV_OPS_BAND` | 꺼짐 | `1`이면 「직접 실행판」 안내 띠(견본이 본 목록에 있다는 것, 서버가 다시 뜨면 결과가 사라진다는 것) |
+| `PV_DEFAULT_DRUGS` | 견본 세 성분 | 첫 화면 입력칸에 미리 넣을 성분(쉼표로, 예: `clozapine,isotretinoin`) |
 
 - 시험: `.venv/bin/python -m pytest -q` (37개, 라이너를 부르지 않는 가짜 클라이언트로 돕니다)
 - 정답표 측정: `.venv/bin/python eval/run_eval.py [--no-title] [--injection]`, 어려운 시험지: `eval/run_hard.py [--inject]` (둘 다 `LINER_API_KEY` 필요)

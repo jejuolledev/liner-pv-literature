@@ -44,7 +44,7 @@
   </form>{% if c.decision %}<p class="small">담당자 결정: <b>{{ decisions[c.decision] }}</b>{% if c.note %} · {{ c.note }}{% endif %}</p>{% endif %}{% if readonly %}<p class="muted small">견본 화면이라 단추는 눌리지 않습니다.</p>{% endif %}
 </article>
 {% else %}
-<p class="empty">이번 검토에서 남은 논문이 없습니다. 판정 이유는 <a href="/log?run={{ run.id }}">기록</a>에 있습니다.</p>
+<p class="empty">{% if all_runs %}아직 결정하지 않은 카드가 없습니다.{% else %}이번 검토에서 남은 논문이 없습니다.{% if run.status == 'running' %} 아직 도는 중입니다. 잠시 뒤 새로 고쳐 주세요.{% elif run.stats.already_seen and not run.stats.new %} 찾은 논문 {{ run.stats.found }}편이 모두 앞 검토에서 본 것이라 새로 읽은 논문이 없습니다.{% endif %}{% endif %} 판정 이유는 <a href="/log?run={{ run.id }}">기록</a>에 있습니다.</p>
 {% endfor %}
 {% endif %}
 {% endblock %}

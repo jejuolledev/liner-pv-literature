@@ -71,3 +71,6 @@ mark{background:var(--yellow);padding:0 1px}
 .field q.plain{background:none;color:var(--red)}
 .ro-band{background:#fff8e1;border-bottom:1px solid #f1e3b0;font-size:14px;padding:8px 0;color:#5b4a12}
 button:disabled{opacity:.45;cursor:not-allowed}
+.login-form{display:grid;gap:12px;max-width:360px;margin:16px 0}
+.login-form label{display:grid;gap:4px;font-weight:500}
+.login-form input{font:inherit;padding:10px 12px;border:1px solid #ccd;border-radius:8px}

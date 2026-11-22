@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}들어가기 · 주간 부작용 문헌 검토{% endblock %}
+{% block body %}
+<section class="intro login">
+  <h1>심사위원 직접 실행판</h1>
+  <p>받으신 아이디와 비밀번호를 넣어 주세요. 한 번 들어오면 이 브라우저에서 14일 동안 다시 묻지 않습니다.</p>
+  {% if bad %}<p class="alert">아이디나 비밀번호가 맞지 않습니다. 다시 넣어 주세요.</p>{% endif %}
+  <form method="post" action="/login" class="login-form">
+    <input type="hidden" name="next" value="{{ next }}">
+    <label>아이디 <input name="user" autocomplete="username" required autofocus></label>
+    <label>비밀번호 <input name="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit" class="primary">들어가기</button>
+  </form>
+</section>
+{% endblock %}

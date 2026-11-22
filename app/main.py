@@ -13,9 +13,12 @@ import os
 import re
 import shutil
 import threading
-from urllib.parse import urlparse
+import time
+from urllib.parse import quote, urlparse
 
 from fastapi import FastAPI, Form, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -62,23 +65,49 @@ REVIEWER = os.environ.get("PV_REVIEWER", "담당자")
 BASIC_USER = os.environ.get("PV_BASIC_USER", "")
 BASIC_PASS = os.environ.get("PV_BASIC_PASS", "")
 tpl.env.globals["readonly"] = READONLY
+# 심사위원 직접 실행판 안내 띠(견본이 본 목록에 있다는 것, 서버가 다시 뜨면 결과가 사라진다는 것)
+tpl.env.globals["ops_band"] = os.environ.get("PV_OPS_BAND") == "1" and not READONLY
+# 처음 화면 입력칸에 미리 넣을 성분(쉼표로). 비우면 견본과 같은 세 성분.
+_dd = [d.strip().lower() for d in os.environ.get("PV_DEFAULT_DRUGS", "").split(",") if d.strip()]
 REPORT_DAYS = 15  # 의약품 등의 안전에 관한 규칙 별표 4의3 제7호, GVP VI.B.7.1 (docs/law_basis.md)
+
+
+AUTH_COOKIE = "pv_auth"
+AUTH_DAYS = 14
+
+
+def _auth_token() -> str:
+    """로그인 쿠키 값. 비밀번호에서 만들어서 인스턴스가 다시 떠도 같은 값이다(서버에 따로 저장하지 않음)."""
+    return hmac.new(BASIC_PASS.encode(), b"pv-login:" + BASIC_USER.encode(), "sha256").hexdigest()
+
+
+def _authed(request: Request) -> bool:
+    tok = request.cookies.get(AUTH_COOKIE, "")
+    if tok and hmac.compare_digest(tok, _auth_token()):
+        return True
+    # 명령줄(curl -u)용으로 기본 인증 머리글도 받는다. 브라우저에는 로그인 창을 띄우지 않는다.
+    h = request.headers.get("authorization", "")
+    if h.startswith("Basic "):
+        try:
+            u, _, pw = base64.b64decode(h[6:]).decode("utf-8").partition(":")
+            return bool(hmac.compare_digest(u, BASIC_USER) & hmac.compare_digest(pw, BASIC_PASS))
+        except Exception:
+            return False
+    return False
+
+
+def _safe_next(n: str) -> str:
+    """로그인 뒤 돌아갈 곳은 이 사이트 안의 경로만(다른 사이트로 보내지 않음)."""
+    return n if n.startswith("/") and not n.startswith("//") and "\\" not in n else "/"
 
 
 @app.middleware("http")
 async def guard(request: Request, call_next):
-    """1) 기본 인증(설정했을 때만) 2) POST 는 다른 사이트에서 보낸 것을 막는다(Origin·Referer 가 있으면 같은 호스트여야)."""
-    if BASIC_USER and BASIC_PASS and request.url.path != "/healthz":
-        ok = False
-        h = request.headers.get("authorization", "")
-        if h.startswith("Basic "):
-            try:
-                u, _, pw = base64.b64decode(h[6:]).decode("utf-8").partition(":")
-                ok = hmac.compare_digest(u, BASIC_USER) & hmac.compare_digest(pw, BASIC_PASS)
-            except Exception:
-                ok = False
-        if not ok:
-            return HTMLResponse("로그인이 필요합니다.", status_code=401, headers={"WWW-Authenticate": 'Basic realm="pv"'})
+    """1) 로그인(설정했을 때만) 2) POST 는 다른 사이트에서 보낸 것을 막는다(Origin·Referer 가 있으면 같은 호스트여야).
+
+    로그인은 앱 자체 화면 + 쿠키로 한다. 브라우저 기본 인증(Authorization 머리글)은 Cloud Run 앞단이
+    IAM 토큰으로 착각해 「401 Your client does not have permission」으로 막는 일이 있었다(11/22 로그 확인).
+    """
     if request.method == "POST":
         # 브라우저는 Sec-Fetch-Site 를 붙인다. 있으면 같은 출처만, 없으면 Origin/Referer 의 호스트를 본다.
         # Origin 이 「null」(샌드박스 iframe·data: 주소)인 것도 막는다.
@@ -88,7 +117,54 @@ async def guard(request: Request, call_next):
               (src and urlparse(src).netloc != request.headers.get("host", ""))
         if bad:
             return HTMLResponse("다른 사이트에서 보낸 요청은 받지 않습니다.", status_code=403)
+    path = request.url.path
+    if BASIC_USER and BASIC_PASS and path not in ("/healthz", "/login") and not path.startswith("/static/"):
+        if not _authed(request):
+            if request.method == "GET" and not path.startswith("/api/") and path != "/log.csv":
+                nxt = path + (("?" + request.url.query) if request.url.query else "")
+                return RedirectResponse("/login?next=" + quote(nxt, safe=""), status_code=303)
+            return JSONResponse({"detail": "로그인이 필요합니다. /login 에서 들어와 주세요."}, status_code=401)
     return await call_next(request)
+
+
+@app.get("/login", response_class=HTMLResponse)
+def login_page(request: Request, next: str = "/", bad: int = 0):
+    if not (BASIC_USER and BASIC_PASS):
+        return RedirectResponse("/", status_code=303)
+    return tpl.TemplateResponse(request, "login.html", {"next": _safe_next(next), "bad": bad, "page": "login", "run": None})
+
+
+@app.post("/login")
+def login(request: Request, user: str = Form(""), password: str = Form(""), next: str = Form("/")):
+    if not (BASIC_USER and BASIC_PASS):
+        return RedirectResponse("/", status_code=303)
+    ok = hmac.compare_digest(user.strip(), BASIC_USER) & hmac.compare_digest(password, BASIC_PASS)
+    if not ok:
+        time.sleep(1)  # 마구 넣어 보기 늦추기
+        return RedirectResponse("/login?bad=1&next=" + quote(_safe_next(next), safe=""), status_code=303)
+    r = RedirectResponse(_safe_next(next), status_code=303)
+    r.set_cookie(AUTH_COOKIE, _auth_token(), max_age=AUTH_DAYS * 86400, httponly=True, samesite="lax",
+                 secure=request.headers.get("x-forwarded-proto", request.url.scheme) == "https")
+    return r
+
+
+@app.exception_handler(StarletteHTTPException)
+async def http_error(request: Request, exc: StarletteHTTPException):
+    """화면에서 생긴 오류는 JSON 대신 알아볼 수 있는 화면으로(돌아가기 단추 포함). /api 는 JSON 그대로."""
+    if request.url.path.startswith("/api/"):
+        return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+    msg = exc.detail if isinstance(exc.detail, str) and exc.detail not in ("Not Found", "Bad Request") else \
+        {404: "찾는 화면이나 논문이 없습니다.", 400: "입력이 올바르지 않습니다."}.get(exc.status_code, "요청을 처리하지 못했습니다.")
+    return tpl.TemplateResponse(request, "error.html", {"msg": msg, "code": exc.status_code, "page": "", "run": None},
+                                status_code=exc.status_code)
+
+
+@app.exception_handler(RequestValidationError)
+async def form_error(request: Request, exc: RequestValidationError):
+    if request.url.path.startswith("/api/"):
+        return JSONResponse({"detail": "입력이 올바르지 않습니다."}, status_code=422)
+    return tpl.TemplateResponse(request, "error.html", {"msg": "입력이 올바르지 않습니다.", "code": 422, "page": "", "run": None},
+                                status_code=422)
 
 
 @app.get("/healthz")
@@ -156,7 +232,7 @@ def card(p: dict, started: str) -> dict:
 def home(request: Request, run: int | None = None):
     r = _run_or_latest(run)
     return tpl.TemplateResponse(request, "home.html", {
-        "run": r, "drugs": list(DEFAULT_DRUGS), "limit": DAILY_LIMIT, "today": store.runs_today(),
+        "run": r, "drugs": (_dd or list(DEFAULT_DRUGS))[:3], "limit": DAILY_LIMIT, "today": store.runs_today(),
         "seen": store.seen_count(), "page": "home", "readonly": READONLY, "max_judge": MAX_JUDGE,
     })
 
@@ -168,13 +244,13 @@ def start_run(drug1: str = Form(""), drug2: str = Form(""), drug3: str = Form(""
         raise HTTPException(400, "성분명을 하나 이상 넣어 주세요.")
     for d in names:
         if not _DRUG_RE.match(d):
-            raise HTTPException(400, "성분명은 영문 3~40자로 넣어 주세요.")
+            raise HTTPException(400, f"「{d}」는 쓸 수 없습니다. 성분명은 영문 3~40자(글자·띄어쓰기·하이픈)로 넣어 주세요. 예: clozapine")
     if READONLY:
         raise HTTPException(403, "읽기 전용 데모입니다.")
     if store.runs_today() >= DAILY_LIMIT:
-        raise HTTPException(429, "오늘 돌릴 수 있는 횟수를 다 썼습니다. 저장된 결과를 봐 주세요.")
+        raise HTTPException(429, f"오늘 돌릴 수 있는 {DAILY_LIMIT}번을 다 썼습니다. 이미 돌린 결과는 「남은 것」「기록」에서 볼 수 있습니다.")
     if not _run_lock.acquire(blocking=False):
-        raise HTTPException(409, "지금 다른 검토가 돌고 있습니다. 잠시 뒤에 다시 눌러 주세요.")
+        raise HTTPException(409, "지금 다른 검토가 돌고 있습니다(한 번에 하나만 돕니다). 첫 화면에서 진행을 볼 수 있고, 끝나면 1~2분 뒤 다시 눌러 주세요.")
     try:
         drugs = {d: names_for(d) for d in dict.fromkeys(names)}
         run_id = store.new_run(list(drugs))

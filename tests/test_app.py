@@ -133,12 +133,12 @@ def test_seed_db_copied_once(tmp_path, monkeypatch):
 def test_basic_auth_and_cross_site_post(tmp_path, monkeypatch):
     import base64
     m = _fresh(monkeypatch, tmp_path, PV_BASIC_USER="u", PV_BASIC_PASS="p")
-    c = TestClient(m.app)
-    assert c.get("/").status_code == 401
+    c = TestClient(m.app, follow_redirects=False)
+    assert c.get("/").status_code == 303
     assert c.get("/healthz").status_code == 200
     good = {"authorization": "Basic " + base64.b64encode(b"u:p").decode()}
     bad = {"authorization": "Basic " + base64.b64encode(b"u:x").decode()}
-    assert c.get("/", headers=bad).status_code == 401
+    assert c.get("/", headers=bad).status_code == 303
     assert c.get("/", headers=good).status_code == 200
     r = c.post("/decide", headers={**good, "origin": "https://evil.example"},
                data={"run_id": 1, "drug": "a", "key": "k", "decision": "report"})
@@ -175,3 +175,61 @@ def test_readonly_buttons_disabled_and_unknown_run_falls_back(tmp_path, monkeypa
     assert "disabled>보고 대상" in html.replace('class="primary" disabled>', "disabled>")
     assert f"검토 #{rid}" in c.get("/?run=99").text
     assert c.get("/docs").status_code == 404 and c.get("/openapi.json").status_code == 404
+
+
+def test_login_form_cookie_flow(tmp_path, monkeypatch):
+    """브라우저는 기본 인증 창 대신 앱 로그인 화면 + 쿠키로 들어온다(Cloud Run 앞단 401 회피)."""
+    m = _fresh(monkeypatch, tmp_path, PV_BASIC_USER="judge", PV_BASIC_PASS="s3cret")
+    c = TestClient(m.app, follow_redirects=False)
+    r = c.get("/remaining?run=1")
+    assert r.status_code == 303 and r.headers["location"].startswith("/login?next=")
+    assert "www-authenticate" not in {k.lower() for k in r.headers}
+    lp = c.get(r.headers["location"])
+    assert lp.status_code == 200 and "비밀번호" in lp.text and 'name="next" value="/remaining?run=1"' in lp.text
+    assert c.get("/api/run/1").status_code == 401 and c.get("/log.csv?run=1").status_code == 401
+    assert c.get("/static/style.css").status_code == 200
+    bad = c.post("/login", data={"user": "judge", "password": "x", "next": "/"})
+    assert bad.status_code == 303 and "bad=1" in bad.headers["location"] and "pv_auth" not in bad.headers.get("set-cookie", "")
+    ok = c.post("/login", data={"user": "judge", "password": "s3cret", "next": "/remaining?run=1"})
+    assert ok.status_code == 303 and ok.headers["location"] == "/remaining?run=1"
+    sc = ok.headers["set-cookie"]
+    assert "pv_auth=" in sc and "httponly" in sc.lower() and "s3cret" not in sc
+    assert "s3cret" not in ok.headers["location"]
+    assert c.get("/").status_code == 200  # 쿠키로 통과
+    # 다른 사이트로 돌려보내지 않는다
+    for evil in ("//evil.example", "https://evil.example", "/\\evil.example"):
+        r2 = c.post("/login", data={"user": "judge", "password": "s3cret", "next": evil})
+        assert r2.headers["location"] == "/"
+    # 쿠키 값은 비밀번호가 바뀌면 무효
+    tok = m._auth_token()
+    m2 = _fresh(monkeypatch, tmp_path, PV_BASIC_USER="judge", PV_BASIC_PASS="other")
+    c2 = TestClient(m2.app, follow_redirects=False, cookies={"pv_auth": tok})
+    assert c2.get("/").status_code == 303
+
+
+def test_bad_input_shows_html_page_not_json(app_mod):
+    c = TestClient(app_mod.app)
+    for bad in ("아토르바스타틴", "123", "a"):
+        r = c.post("/run", data={"drug1": bad})
+        assert r.status_code == 400 and "text/html" in r.headers["content-type"]
+        assert "영문 3~40자" in r.text and "돌아가기" in r.text and '"detail"' not in r.text
+    r = c.post("/run", data={"drug1": " ", "drug2": "", "drug3": ""})
+    assert r.status_code == 400 and "하나 이상" in r.text
+    r = c.post("/decide", data={"run_id": 999, "drug": "a", "key": "k", "decision": "report"})
+    assert r.status_code == 404 and "text/html" in r.headers["content-type"]
+    r = c.post("/decide", data={"drug": "a"})
+    assert r.status_code == 422 and "입력" in r.text
+
+
+def test_ops_band_and_default_drugs(tmp_path, monkeypatch):
+    m = _fresh(monkeypatch, tmp_path, PV_OPS_BAND="1", PV_DEFAULT_DRUGS="clozapine, Isotretinoin")
+    html = TestClient(m.app).get("/").text
+    assert "심사위원 직접 실행판" in html and 'value="clozapine"' in html and 'value="isotretinoin"' in html
+
+
+def test_zero_new_papers_explained(app_mod):
+    rid = app_mod.store.new_run(["atorvastatin"])
+    app_mod.store.update_run(rid, status="done", stats={"found": 40, "already_seen": 40, "new": 0, "phase": "끝"})
+    c = TestClient(app_mod.app)
+    assert "모두 앞 검토에서 이미 본 것" in c.get(f"/?run={rid}").text
+    assert "모두 앞 검토에서 본 것" in c.get(f"/remaining?run={rid}").text
