@@ -233,3 +233,12 @@ def test_zero_new_papers_explained(app_mod):
     c = TestClient(app_mod.app)
     assert "모두 앞 검토에서 이미 본 것" in c.get(f"/?run={rid}").text
     assert "모두 앞 검토에서 본 것" in c.get(f"/remaining?run={rid}").text
+
+
+def test_interrupted_run_shows_reason(tmp_path, monkeypatch):
+    m = _fresh(monkeypatch, tmp_path)
+    rid = m.store.new_run(["clozapine"])
+    m2 = _fresh(monkeypatch, tmp_path)  # 같은 DB로 서버가 다시 뜬 것
+    r = m2.store.get_run(rid)
+    assert r["status"] == "failed" and "다시 시작" in r["log"][-1]
+    assert "다시 시작되어 멈췄습니다" in TestClient(m2.app).get(f"/?run={rid}").text

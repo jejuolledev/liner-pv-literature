@@ -42,7 +42,7 @@
 
 ## 실행 방법
 
-Python 3.11 이상.
+Python 3.11 이상(`python3 --version`으로 확인. macOS 기본 3.9면 `brew install python@3.12` 뒤 `python3.12 -m venv .venv`, 또는 아래 도커).
 
 ```bash
 python -m venv .venv

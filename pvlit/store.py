@@ -50,7 +50,9 @@ class Store:
         self.db.row_factory = sqlite3.Row
         self.db.executescript(SCHEMA)
         # 서버가 꺼지며 「도는 중」으로 남은 회차를 정리한다.
-        self.db.execute("UPDATE runs SET status='failed' WHERE status='running'")
+        # 이유를 기록에 남겨 화면에 「왜 실패했는지」가 보이게 한다.
+        self.db.execute("UPDATE runs SET status='failed', log=? WHERE status='running'",
+                        (json.dumps(["돌리는 도중 서버가 다시 시작되어 멈췄습니다. 다시 돌려 주세요."], ensure_ascii=False),))
         self.db.commit()
 
     # --- 본 목록 ---
