@@ -1,0 +1,22 @@
+{"reviewer": "B", "answers": {
+"S01": {"case": true, "evidence": "suggesting that the medication may have exac-erbated his erectile issues", "why": "Single new patient on semaglutide with worsened ED that improved after stopping it."},
+"S02": {"case": true, "evidence": "suggested a possible drug-associated neuro-ophthalmic adverse effect", "why": "New patient with visual disturbance after semaglutide, authors suspect the drug."},
+"S03": {"case": true, "evidence": "experienced transient intestinal ischemia following his first Wegovy dosage", "why": "New patient with intestinal ischemia attributed to semaglutide."},
+"S04": {"case": true, "evidence": "suggesting that metformin was the most likely causative agent", "why": "New patient with erythema multiforme assessed as probably caused by metformin."},
+"S05": {"case": true, "evidence": "The Naranjo Adverse Drug Reaction Probability Scale score was 6 (“probable”)", "why": "New patient with postmenopausal bleeding judged probably due to semaglutide."},
+"S06": {"case": true, "evidence": "semaglutide-induced gastroparesis and slow intestinal transit may have contributed to bezoar formation", "why": "New patient with bezoar obstruction that authors link to semaglutide."},
+"S07": {"case": true, "evidence": "developed SPM shortly after the self-administered use of semaglutide", "why": "New patient with pneumomediastinum after semaglutide-related vomiting, presented as a drug consequence."},
+"S08": {"case": true, "evidence": "suggests a possible association between oral semaglutide and venous thrombosis", "why": "New adolescent patient with DVT linked as possible to oral semaglutide."},
+"S09": {"case": true, "evidence": "a rare case of metformin toxicity resulting in biventricular failure", "why": "New patient with cardiogenic shock attributed to metformin toxicity."},
+"S10": {"case": true, "evidence": "we present a case of 65-year-old women", "why": "New patient with metformin-associated lactic acidosis."},
+"S11": {"case": true, "evidence": "severe acidemia due to MILA precipitated by post-obstructive acute kidney injury", "why": "New patient with metformin-induced lactic acidosis."},
+"S12": {"case": true, "evidence": "three patients who developed acute, painless vision loss shortly after initiating semaglutide therapy", "why": "Own three-patient series with NAION suspected due to semaglutide."},
+"S13": {"case": true, "evidence": "intentionally ingested 34 g of her prescribed metformin", "why": "New patient with fatal MALA from metformin overdose, harm attributed to metformin."},
+"S14": {"case": true, "evidence": "We describe a fatal case of MALA following intentional metformin overdose", "why": "New patient with fatal MALA caused by metformin overdose."},
+"S15": {"case": true, "evidence": "severe AKI while on metformin therapy", "why": "New patient with metformin-associated lactic acidosis."},
+"S16": {"case": true, "evidence": "confirmed the diagnosis of metformin-associated encephalopathy", "why": "New patient with encephalopathy attributed to metformin."},
+"S17": {"case": true, "evidence": "Both patients developed similar cutaneous manifestations during therapy", "why": "Two new patients with acneiform eruptions temporally associated with semaglutide."},
+"S18": {"case": true, "evidence": "myopathy probably caused by concomitant use of atorvastatin and almonertinib", "why": "New patient with myopathy from atorvastatin as interacting suspect drug."},
+"S19": {"case": true, "evidence": "discontinued several months after starting semaglutide due to acute gallstone pancreatitis", "why": "New patient on semaglutide with gallstone pancreatitis presented as a potential adverse event."},
+"S20": {"case": true, "evidence": "temporally related to semaglutide exposure and re-exposure", "why": "New patient with transient hip osteoporosis possibly linked to semaglutide with rechallenge."}
+}}

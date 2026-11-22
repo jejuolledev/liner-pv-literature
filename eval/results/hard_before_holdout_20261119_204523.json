@@ -1,0 +1,333 @@
+{
+ "when": "2026-11-19T20:45:23",
+ "label": "before",
+ "split": "holdout",
+ "prompt_version": "28c0bbc661",
+ "score": {
+  "n": 14,
+  "strict": {
+   "tp": 7,
+   "fp": 0,
+   "fn": 1,
+   "tn": 6,
+   "precision": 1.0,
+   "recall": 0.875
+  },
+  "kept": {
+   "tp": 8,
+   "fp": 0,
+   "fn": 0,
+   "tn": 6,
+   "precision": 1.0,
+   "recall": 1.0
+  },
+  "verdicts": {
+   "candidate": 7,
+   "check": 1,
+   "not_case": 6
+  },
+  "quotes": 28,
+  "quotes_verbatim": 27,
+  "missed_strict": [
+   "P146"
+  ],
+  "missed_kept": [],
+  "false_keeps_strict": [],
+  "true_cases_all3_verified": 7,
+  "quote_match_rate": 0.964
+ },
+ "ledger": {
+  "scholar_calls": 0,
+  "web_calls": 0,
+  "mark_calls": 14,
+  "mark_in_tokens": 10958,
+  "mark_out_tokens": 1328,
+  "errors": 0,
+  "api_seconds": 30.8,
+  "cost_usd": 0.0176
+ },
+ "balance_before": 198.839241,
+ "balance_after": 198.821643,
+ "details": [
+  {
+   "id": "P170",
+   "case": true,
+   "kind": "제목에 case 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 59-year-old female",
+    "drug_quote": "following the administration of levetiracetam",
+    "event_quote": "TDPs leading to multiple electric cardioversions",
+    "reason_ko": "59세 여성에게 레비티라세탐 투여 후 토르사드 드 푸앵트가 발생한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P092",
+   "case": true,
+   "kind": "제목에 case 없음·나이 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "The patient’s lipid panel revealed grade 4 hypertriglyceridemia and hypercholesterolemia.",
+    "drug_quote": "after nine doses of pembrolizumab",
+    "event_quote": "grade 4 hypertriglyceridemia and hypercholesterolemia",
+    "reason_ko": "개별 환자에게 펨브롤리주맙 투여 후 고중성지방혈증과 고콜레스테롤혈증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P149",
+   "case": true,
+   "kind": "제목에 case 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 68-year-old man",
+    "drug_quote": "initiation of amiodarone and mexiletine treatment",
+    "event_quote": "acute hypoxic respiratory failure",
+    "reason_ko": "68세 남성이 아미오다론 투여 후 급성 저산소성 호흡부전을 겪었고, 저자들은 아미오다론 유발 폐독성을 의심합니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P194",
+   "case": true,
+   "kind": "자체 환자 15명 증례 시리즈",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_series",
+    "is_individual_case": true,
+    "patient_quote": "15 patients who experienced unusual adverse effects linked to levetiracetam",
+    "drug_quote": "an unusual adverse effect occurred during levetiracetam monotherapy or combination therapy",
+    "event_quote": "severe depression, suicidal tendency, mania",
+    "reason_ko": "레비티라세탐을 투여받은 15명의 개별 환자에서 약물과 연관된 이상반응을 보고한 증례군입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H023",
+   "case": true,
+   "kind": "제목은 「흉내」, 본문은 스타틴 유발",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 62-year-old Hispanic woman",
+    "drug_quote": "shortly after initiating atorvastatin therapy",
+    "event_quote": "progressive proximal muscle weakness, myalgias, and joint discomfort",
+    "reason_ko": "아토르바스타틴 투여 후 발생한 피부근염 의심 사례로 개별 환자가 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H067",
+   "case": true,
+   "kind": "제목에 성분명 없음(GLP-1 RA)",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 14-year-old female patient with autism, developmental delay, and obesity",
+    "drug_quote": "obesity managed with semaglutide who presented for esophagogastroduodenoscopy and colonoscopy",
+    "event_quote": "Endoscopy confirmed substantial residual gastric contents exceeding 200 mL",
+    "reason_ko": "세마글루타이드를 투여받은 개별 환자에게 위 내용물 잔류가 발생했으며, 저자들은 이를 약물의 위 배출 지연과 연관 지었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P146",
+   "case": true,
+   "kind": "초록 글자가 깨짐",
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "A 63-year-old female with a known case of chronic atrial fibrillation (AF)",
+    "drug_quote": "",
+    "event_quote": "Amiodarone Pulmonary Toxicity",
+    "reason_ko": "개별 환자는 확인되지만, 해당 환자에게 아미오다론을 투여했다는 내용이 없습니다."
+   },
+   "checks": {
+    "patient_quote": "unverified",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P199",
+   "case": true,
+   "kind": "증례+문헌고찰",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 17-year-old female presented with a sudden and marked decrease in vision",
+    "drug_quote": "Medical history was notable for oral isotretinoin therapy for 2 months.",
+    "event_quote": "A diagnosis of acute toxic optic neuritis of the left eye",
+    "reason_ko": "17세 환자에게 투여된 이소트레티노인과 급성 독성 시신경염의 관련성이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P088",
+   "case": false,
+   "kind": "제목에 case report, 실제는 발표된 42편 분석",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "pembrolizumab-induced immune-related hepatitis",
+    "reason_ko": "기존 증례보고 42건을 분석한 문헌고찰이며 개별 환자 증례를 기술하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P190",
+   "case": false,
+   "kind": "드문 부작용 고찰",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "개별 환자 사례가 아닌 레비티라세탐 이상반응에 관한 문헌고찰입니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "P051",
+   "case": false,
+   "kind": "발표된 증례 고찰 계획서",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "muscle-related adverse events associated with semaglutide or tirzepatide",
+    "reason_ko": "개별 환자 사례가 아닌 체계적 문헌고찰의 계획을 설명합니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H018",
+   "case": false,
+   "kind": "동물(쥐)·예방 효과",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "animal_or_lab",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "Grupo I (GI): 5-FU + 1mg de atorvastatina",
+    "event_quote": "intensa caquexia e perda de peso no GC",
+    "reason_ko": "사람 환자가 아닌 쥐 실험이며, 아토르바스타틴은 예방 효과를 평가하는 약물입니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P020",
+   "case": false,
+   "kind": "시험관 상호작용 자료",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "animal_or_lab",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "시험관 내 효소 실험으로, 아토르바스타틴 관련 이상반응을 겪은 개별 환자가 없습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "P104",
+   "case": false,
+   "kind": "체계적 고찰",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "immune‑related adverse events (irAEs), including sarcoid‑like reactions (SLRs)",
+    "reason_ko": "체계적 문헌고찰이며 이상반응을 겪은 개별 환자를 기술하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  }
+ ]
+}

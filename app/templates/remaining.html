@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block body %}
+{% if not run %}<p>아직 돌린 검토가 없습니다. <a href="/">이번 주 검토</a>에서 돌려 주세요.</p>{% else %}
+<section class="intro">
+  <h1>남은 것 {{ cards|length }}편 <span class="muted">· {% if all_runs %}모든 검토에서 아직 결정 안 한 것{% else %}검토 #{{ run.id }}{% endif %}</span></h1>
+  <p class="summary">세 칸 원문 확인 <b>{{ cards|selectattr('all_ok')|list|length }}</b> · 확인 안 된 칸 있음 <b class="red">{{ cards|rejectattr('all_ok')|list|length }}</b> · 담당자 결정 <b>{{ cards|selectattr('decision')|list|length }}</b>/{{ cards|length }}{% if not all_runs %} · 같은 검토에서 뺀 논문 {{ dropped }}편은 <a href="/log?run={{ run.id }}">기록</a>에{% else %} · 뺀 논문과 이유는 <a href="/log">기록</a>에{% endif %}</p>
+  <p>노란 칸은 초록에 글자 그대로 있는 문장입니다. 빨간 칸은 초록에서 글자로 확인되지 않은 칸이니 원문을 직접 봐 주세요. 보고 여부는 담당자가 누릅니다.</p>
+</section>
+{% for c in cards %}
+<article class="card {{ 'decided' if c.decision }} {{ 'warn' if not c.all_ok }}" id="c{{ loop.index }}">
+  <div class="card-head">
+    <span class="drug">{{ c.drug }}</span>
+    <span class="muted small">검토 #{{ c.run_id }}</span>
+    {% if c.verdict == 'error' %}<span class="pill red">판정 못 함 · 직접 확인</span>{% elif c.verdict == 'check' %}<span class="pill red">에이전트는 증례 아님 · 미심쩍어 남김</span>{% elif c.all_ok %}<span class="pill ok">세 칸 원문 확인</span>{% else %}<span class="pill red">확인 안 된 칸 있음</span>{% endif %}
+    {% if c.decision %}<span class="pill done">{{ decisions[c.decision] }}</span>{% endif %}
+  </div>
+  <h2 class="title">{{ c.title_html }}</h2>
+  <p class="src">
+    <a href="{{ c.url|safe_url }}" target="_blank" rel="noopener noreferrer">{{ c.url }}</a><br>
+    {{ c.journal }} · 발행일 {{ c.date.raw or '없음' }} <span class="muted">(라이너 표기)</span>
+    {% if c.date.flag %}<span class="pill red">{{ c.date.flag }}</span>{% endif %}
+  </p>
+  {% if c.injection %}<p class="alert">초록 안에 AI에게 내리는 지시처럼 보이는 글이 있습니다({{ c.injection|join(', ') }}). 판정을 믿지 말고 원문을 직접 읽어 주세요.</p>{% endif %}
+  <div class="fields">
+    {% for f in c.fields %}
+    <div class="field {{ f.status }}">
+      <span class="flabel">{{ f.label }}</span>
+      {% if f.status == 'ok' %}<q>{{ f.quote }}</q><span class="fnote">원문 {{ '초록' if f.where=='abstract' else '제목' }}에 있음</span>
+      {% elif f.status == 'missing' %}<span class="fnote">{{ f.why or '에이전트가 찾지 못함 · 확인 안 됨' }}</span>
+      {% else %}<q class="{{ 'plain' if f.where else 'bad' }}">{{ f.quote }}</q><span class="fnote">{{ f.why or '초록에서 글자로 확인 안 됨' }}</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <p class="reason">에이전트 판단: {{ c.reason }}</p>
+  <details><summary>초록 원문 보기</summary><p class="abstract">{{ c.abstract_html }}</p></details>
+  <div class="due">검색일 {{ c.found }} · 중대한 사례면 {{ days }}일 기한 <b>{{ c.due }}</b> <span class="muted">(의약품 등의 안전에 관한 규칙 별표 4의3 제7호 · EMA GVP VI.App.2.7: 주간 검색이면 검색한 날이 기준일)</span></div>
+  <form method="post" action="/decide" class="decide">
+    <input type="hidden" name="back" value="{{ '' if all_runs else 'run' }}">
+    <input type="hidden" name="run_id" value="{{ c.run_id }}"><input type="hidden" name="drug" value="{{ c.drug }}"><input type="hidden" name="key" value="{{ c.key }}">
+    <input name="note" placeholder="메모(선택)" value="{{ c.note or '' }}" maxlength="500" {{ 'disabled' if readonly }}>
+    <button name="decision" value="report" class="primary" {{ 'disabled' if readonly }}>보고 대상</button>
+    <button name="decision" value="not_report" {{ 'disabled' if readonly }}>아님</button>
+    <button name="decision" value="later" {{ 'disabled' if readonly }}>나중에</button>
+  </form>{% if c.decision %}<p class="small">담당자 결정: <b>{{ decisions[c.decision] }}</b>{% if c.note %} · {{ c.note }}{% endif %}</p>{% endif %}{% if readonly %}<p class="muted small">견본 화면이라 단추는 눌리지 않습니다.</p>{% endif %}
+</article>
+{% else %}
+<p class="empty">이번 검토에서 남은 논문이 없습니다. 판정 이유는 <a href="/log?run={{ run.id }}">기록</a>에 있습니다.</p>
+{% endfor %}
+{% endif %}
+{% endblock %}

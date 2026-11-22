@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+{% if not run %}<p>아직 돌린 검토가 없습니다.</p>{% else %}
+<section class="intro">
+  <h1>기록 <span class="muted">· 검토 #{{ run.id }} · {{ rows|length }}편</span></h1>
+  <p>이번 검토에서 읽은 논문 전부와 남기거나 뺀 이유입니다. 감사 때 그대로 내보낼 수 있습니다.</p>
+  <a class="primary link-btn" href="/log.csv?run={{ run.id }}">CSV 내려받기</a>
+  <span class="muted small">쓴 돈 ${{ '%.4f'|format(run.ledger.cost_usd or 0) }} · 학술 검색 {{ run.ledger.scholar_calls or 0 }}번 · 판정 {{ run.ledger.mark_calls or 0 }}번</span>
+</section>
+<div class="table-wrap">
+<table class="log-table">
+<thead><tr><th>성분</th><th>논문</th><th>발행일<br><span class="muted">라이너 표기</span></th><th>에이전트</th><th>이유</th><th>담당자</th></tr></thead>
+<tbody>
+{% for p in rows %}
+<tr class="v-{{ p.verdict }}">
+  <td>{{ p.drug }}</td>
+  <td><a href="{{ p.url|safe_url }}" target="_blank" rel="noopener noreferrer">{{ p.title }}</a></td>
+  <td>{{ p.date.raw or '-' }}{% if p.date.flag %}<br><span class="pill red">{{ p.date.flag }}</span>{% endif %}</td>
+  <td>{{ p.verdict_ko }}</td>
+  <td>{{ p.reason }}</td>
+  <td>{{ decisions.get(p.decision, '') }}</td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+{% if runs|length > 1 %}<h2 class="sub">이전 검토</h2><ul class="runs">{% for r in runs %}<li><a href="/log?run={{ r.id }}">#{{ r.id }} {{ r.started[:16].replace('T',' ') }} · {{ r.drugs|join(', ') }} · 남은 것 {{ r.stats.candidates or 0 }}</a></li>{% endfor %}</ul>{% endif %}
+{% endif %}
+{% endblock %}

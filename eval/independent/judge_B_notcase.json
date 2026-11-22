@@ -1,0 +1,22 @@
+{"reviewer": "B", "answers": {
+"N01": {"case": false, "evidence": "suggests a probable interaction between tirzepatide and lithium", "why": "New patient, but lithium toxicity is attributed to tirzepatide-lithium interaction after semaglutide was stopped; semaglutide is not a suspect."},
+"N02": {"case": false, "evidence": "This retrospective review of 161 youth with obesity", "why": "Retrospective cohort review with aggregate side-effect rates, no individual patient case."},
+"N03": {"case": false, "evidence": "In a randomized, open-label pilot study, 16 healthy adults", "why": "Preclinical mouse study plus clinical pilot trial with aggregate AEs."},
+"N04": {"case": false, "evidence": "We analyzed the Food and Drug Administration Adverse Event Reporting System (FAERS) reports", "why": "Pharmacovigilance database disproportionality analysis, not an individual case."},
+"N05": {"case": false, "evidence": "In the STOP-CA trial, participants with lymphoma treated with anthracyclines were randomized", "why": "Randomized trial of atorvastatin as cardioprotection, no individual case."},
+"N06": {"case": false, "evidence": "A total of 51 breast cancer patients receiving paclitaxel were included", "why": "Group study of gene expression, no individual adverse event attributed to metformin."},
+"N07": {"case": false, "evidence": "an in vitro POI model was established using cisplatin-treated human GCs", "why": "In vitro laboratory study."},
+"N08": {"case": false, "evidence": "We conducted a single-center, non-randomized, retrospective study enrolling 67 CSDH patients", "why": "Retrospective cohort study with aggregate safety data."},
+"N09": {"case": false, "evidence": "We used data from the MUSE study, a double-blinded crossover trial", "why": "Pharmacogenetic analysis of trial data, no individual case."},
+"N10": {"case": false, "evidence": "In this case-control study including 22 964 first-time semaglutide users", "why": "Population case-control study about drug initiation, no adverse event case."},
+"N11": {"case": false, "evidence": "no significant adverse drug reactions have been reported", "why": "Case report where semaglutide only helped as treatment with no adverse event."},
+"N12": {"case": false, "evidence": "We conducted a 12-month posttreatment follow-up of patients enrolled in the Atorvastatin Therapy in Cavernous Angiomas", "why": "Trial follow-up analysis with group-level outcomes."},
+"N13": {"case": false, "evidence": "Cutaneous Adverse Events Associated with Semaglutide, Liraglutide and Tirzepatide: A Systematic Review", "why": "Systematic review of published studies and cases, no new patient."},
+"N14": {"case": false, "evidence": "We conducted 12-month (±1 month) post-treatment follow-up of all 80 patients randomized in the AT CASH EPOC trial", "why": "Trial follow-up abstract with group-level survival analysis."},
+"N15": {"case": false, "evidence": "This prospective randomized controlled study included 240 patients", "why": "Randomized controlled study reporting aggregate adverse events."},
+"N16": {"case": false, "evidence": "A Systematic Review and Meta-analysis", "why": "Meta-analysis of existing studies, no new patient."},
+"N17": {"case": false, "evidence": "pharmacovigilance study in the FAERS database", "why": "Database signal-detection study, not an individual case."},
+"N18": {"case": false, "evidence": "sixty adult heterosexual men diagnosed with vasculogenic ED", "why": "Comparative clinical study of efficacy, no individual adverse event case."},
+"N19": {"case": false, "evidence": "This study is intended to design as well as evaluate new drug release system of atorvastatin nanogel", "why": "Pharmaceutical formulation laboratory study."},
+"N20": {"case": false, "evidence": "This review critically evaluated the pharmacological interactions between integrase inhibitors and metformin", "why": "Literature review without a new patient."}
+}}

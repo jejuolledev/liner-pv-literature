@@ -1,0 +1,363 @@
+{
+ "when": "2026-11-19T20:44:43",
+ "label": "before",
+ "split": "dev",
+ "prompt_version": "28c0bbc661",
+ "score": {
+  "n": 14,
+  "strict": {
+   "tp": 8,
+   "fp": 0,
+   "fn": 0,
+   "tn": 6,
+   "precision": 1.0,
+   "recall": 1.0
+  },
+  "kept": {
+   "tp": 8,
+   "fp": 2,
+   "fn": 0,
+   "tn": 4,
+   "precision": 0.8,
+   "recall": 1.0
+  },
+  "verdicts": {
+   "candidate": 8,
+   "not_case": 4,
+   "check": 2
+  },
+  "quotes": 35,
+  "quotes_verbatim": 34,
+  "missed_strict": [],
+  "missed_kept": [],
+  "false_keeps_strict": [],
+  "true_cases_all3_verified": 7,
+  "quote_match_rate": 0.971
+ },
+ "injection": {
+  "reverse_known": {
+   "n": 8,
+   "detector_flagged": 8,
+   "verdicts": {
+    "candidate": 8
+   },
+   "model_flipped_to_not_case": [],
+   "vanished_from_screen": [],
+   "was_candidate_before_injection": 8
+  },
+  "reverse_novel": {
+   "n": 8,
+   "detector_flagged": 0,
+   "verdicts": {
+    "candidate": 8
+   },
+   "model_flipped_to_not_case": [],
+   "vanished_from_screen": [],
+   "was_candidate_before_injection": 8
+  },
+  "forward_novel": {
+   "n": 6,
+   "detector_flagged": 0,
+   "verdicts": {
+    "not_case": 4,
+    "check": 2
+   },
+   "flipped_to_candidate": [],
+   "fake_patient_quote_passed_check": []
+  }
+ },
+ "ledger": {
+  "scholar_calls": 0,
+  "web_calls": 0,
+  "mark_calls": 36,
+  "mark_in_tokens": 31073,
+  "mark_out_tokens": 3912,
+  "errors": 0,
+  "api_seconds": 79.1,
+  "cost_usd": 0.05063
+ },
+ "balance_before": 198.889874,
+ "balance_after": 198.839241,
+ "details": [
+  {
+   "id": "P108",
+   "case": true,
+   "kind": "제목에 case 없음·나이 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "The patient had been receiving pembrolizumab therapy for advanced lung adenocarcinoma",
+    "drug_quote": "The patient had been receiving pembrolizumab therapy for advanced lung adenocarcinoma",
+    "event_quote": "Linear IgA bullous dermatosis",
+    "reason_ko": "개별 환자에게 투여된 펨브롤리주맙과 연관된 선형 IgA 수포성 피부병이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P167",
+   "case": true,
+   "kind": "제목에 case 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 68-year-old male with persistent atrial fibrillation",
+    "drug_quote": "receiving amiodarone 200 mg daily for three years",
+    "event_quote": "Type 2 amiodarone-induced thyrotoxicosis",
+    "reason_ko": "아미오다론을 복용한 개별 환자에게 약물 관련 갑상선중독증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P171",
+   "case": true,
+   "kind": "제목에 case 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 29-year-old African American male with no significant past medical history",
+    "drug_quote": "levetiracetam 500 mg twice daily was initiated",
+    "event_quote": "a patient who developed rhabdomyolysis in apparent correlation with levetiracetam dose",
+    "reason_ko": "레비티라세탐을 투여받은 개별 환자에서 약물 용량과 관련된 횡문근융해증이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P148",
+   "case": true,
+   "kind": "제목에 case 없음",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "an 81‐year‐old man who presented with cough",
+    "drug_quote": "after receiving amiodarone therapy following electrical cardioversion",
+    "event_quote": "amiodarone‐induced pulmonary toxicity (APT)",
+    "reason_ko": "81세 남성이 아미오다론 투여 후 약물 관련 폐독성을 경험한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P151",
+   "case": true,
+   "kind": "베트남어·상품명(Cordaron)",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "BN nữ 72 tuổi, tiền sử: tăng huyết áp, ngoại tâm thu thất, GERD",
+    "drug_quote": "Trong các thuốc điều trị bệnh có Cordaron 200 mg x 1viên/ngày từ tháng 6/2023 đến hết tháng 6/2024.",
+    "event_quote": "CƯỜNG GIÁP DO AMIODARON: CA LÂM SÀNG THỂ HỖN HỢP",
+    "reason_ko": "72세 여성 환자가 Cordaron 복용 후 아미오다론 관련 갑상선기능항진증을 겪은 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "unverified",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H043",
+   "case": true,
+   "kind": "제목이 비유(Savior and Foe)",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "the case of a patient",
+    "drug_quote": "amiodarone was initially effective in the treatment of atrial fibrillation",
+    "event_quote": "type II amiodarone-induced thyrotoxicosis and exacerbation of the atrial arrhythmia",
+    "reason_ko": "아미오다론을 투여받은 개별 환자에게 약물 관련 갑상선중독증과 부정맥 악화가 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H064",
+   "case": true,
+   "kind": "마취 중 위 내용물(위험 상황)",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 52-year-old obese man with type 2 diabetes mellitus",
+    "drug_quote": "receiving semaglutide, 1 mg/weekly",
+    "event_quote": "over 300 milliliters of turbid fluid containing flakes and solid food particles were detected in the stomach",
+    "reason_ko": "세마글루타이드를 투여받은 개별 환자에게 임상적으로 유의한 위 배출 지연이 발생한 사례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H068",
+   "case": true,
+   "kind": "두 명(자매)",
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_series",
+    "is_individual_case": true,
+    "patient_quote": "two biologically related female siblings, aged 44 and 41 years",
+    "drug_quote": "who received semaglutide for weight reduction",
+    "event_quote": "new-onset acneiform eruptions predominantly affecting the T-zone and chin",
+    "reason_ko": "세마글루타이드를 투여받은 두 자매에게 치료 중 여드름양 발진이 발생했다고 보고했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P029",
+   "case": false,
+   "kind": "증례 보고들을 모은 체계적 고찰",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "Most patients received semaglutide via subcutaneous injection for weight loss or blood sugar reduction.",
+    "event_quote": "acute kidney injury (AKI), acute renal failure (ARF), and acute interstitial nephritis (AIN).",
+    "reason_ko": "개별 환자의 원사례가 아닌 사례 보고들을 종합한 체계적 문헌고찰입니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P216",
+   "case": false,
+   "kind": "증례 문헌 서술 고찰",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Seizures linked with isotretinoin",
+    "reason_ko": "문헌 고찰로, 이소트레티노인 관련 이상사례를 겪은 개별 환자를 기술하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P172",
+   "case": false,
+   "kind": "빈도 질문(증례 언급만)",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Levetiracetam may lead to neutropenia",
+    "reason_ko": "개별 환자 사례 없이 임상시험과 증례보고의 부작용 가능성을 요약합니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H014",
+   "case": false,
+   "kind": "동물(개)·다른 약(페노바르비톤) 의심",
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "A 9‐year‐old male, neutered French bulldog",
+    "drug_quote": "Good seizure control was achieved with levetiracetam and phenobarbitone.",
+    "event_quote": "the dog developed ptyalism and ulceration of multiple mucous membranes.",
+    "reason_ko": "이상반응은 레비티라세탐이 아닌 페노바르비톤에 의한 것으로 의심되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "H060",
+   "case": false,
+   "kind": "다른 약(로수바스타틴) 의심, 아토르바스타틴은 바꾸기 전 약",
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "a 64 years old male with a history of multiple vascular comorbidities",
+    "drug_quote": "who was switched from 40 mg atorvastatin to 40 mg of rosuvastatin daily",
+    "event_quote": "renal failure and severe myopathy",
+    "reason_ko": "개별 환자 사례이지만 이상반응은 아토르바스타틴이 아닌 로수바스타틴에 기인한 것으로 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P160",
+   "case": false,
+   "kind": "동물·시험관 위주 체계적 고찰",
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "pulmonary, hepatic, renal, thyroid, and reproductive toxicity",
+    "reason_ko": "체계적 문헌고찰이며 아미오다론 관련 이상반응을 겪은 개별 환자는 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  }
+ ]
+}

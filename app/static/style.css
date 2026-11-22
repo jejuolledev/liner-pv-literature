@@ -1,0 +1,73 @@
+:root{--ink:#1d2329;--muted:#66707a;--line:#e3e6ea;--bg:#f6f7f8;--card:#fff;--accent:#0f5c4d;--accent-ink:#fff;--yellow:#fff1a8;--red:#c4362b;--red-bg:#fdecea;--ok:#1f7a4d;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans KR",system-ui,-apple-system,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.brand{font-weight:700;color:var(--ink);text-decoration:none}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{padding:6px 12px;border-radius:6px;text-decoration:none;color:var(--muted);font-weight:500}
+nav a.on{background:var(--accent);color:var(--accent-ink)}
+.intro h1{font-size:24px;margin:28px 0 6px;line-height:1.35}
+.intro p{color:var(--muted);margin:0 0 16px}
+.muted{color:var(--muted);font-weight:400}
+.small{font-size:14px}
+.run-form{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:18px}
+.run-form label{font-weight:500;display:block;margin-bottom:8px}
+.drugs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+input{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:7px;min-width:0;width:100%}
+button,.link-btn{font:inherit;font-weight:500;padding:9px 16px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-block}
+.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.hint{color:var(--muted);font-size:14px;margin:10px 0 0}
+.progress{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:12px}
+.prog-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.prog-head h2{font-size:18px;margin:0}
+.badge{font-size:13px;padding:3px 10px;border-radius:99px;background:#eef1f3}
+.badge.done{background:#e3f3ea;color:var(--ok)}.badge.failed{background:var(--red-bg);color:var(--red)}
+.bar{height:6px;background:#eef1f3;border-radius:3px;margin:14px 0;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);transition:width .4s}
+.nums{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.nums li{font-size:13px;color:var(--muted);display:flex;flex-direction:column}
+.nums b{font-size:22px;color:var(--ink)}
+.nums li.hl b{color:var(--accent)}
+.phase{margin:10px 0 4px;font-size:14px}
+.log{font:12px/1.5 ui-monospace,monospace;color:var(--muted);padding-left:18px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px}
+.card.warn{border-left:4px solid var(--red)}
+.card.decided{opacity:.65}
+.card-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.drug{font-weight:700;color:var(--accent)}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;background:#eef1f3}
+.pill.ok{background:#e3f3ea;color:var(--ok)}.pill.red{background:var(--red-bg);color:var(--red)}.pill.done{background:var(--accent);color:#fff}
+.title{font-size:17px;margin:10px 0 6px;line-height:1.45}
+.src{font-size:13px;color:var(--muted);margin:0 0 10px;word-break:break-all}
+.alert{background:var(--red-bg);color:var(--red);padding:8px 12px;border-radius:7px;font-size:14px}
+.fields{display:grid;gap:6px;margin:8px 0}
+.field{display:grid;grid-template-columns:64px 1fr;gap:2px 10px;padding:8px 10px;border-radius:7px;background:#fafbfb;border:1px solid var(--line)}
+.field .flabel{font-weight:700;grid-row:span 2}
+.field q{quotes:none;background:var(--yellow);padding:0 3px}
+.field q.bad{background:none;text-decoration:line-through;color:var(--red)}
+.field.unverified,.field.missing{background:var(--red-bg);border-color:#f3c3be}
+.fnote{font-size:12px;color:var(--muted)}
+.field.unverified .fnote,.field.missing .fnote{color:var(--red);font-weight:500}
+.reason{font-size:14px;margin:8px 0}
+details{margin:6px 0 10px}summary{cursor:pointer;color:var(--accent);font-size:14px}
+.abstract{font-size:14px;line-height:1.7;white-space:pre-line}
+mark{background:var(--yellow);padding:0 1px}
+.due{font-size:13px;color:var(--ink);margin-bottom:10px}
+.decide{display:flex;gap:6px;flex-wrap:wrap}
+.decide input{flex:1 1 200px}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:24px;text-align:center}
+.table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:14px}
+.log-table{border-collapse:collapse;width:100%;font-size:13px}
+.log-table th,.log-table td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.log-table th{background:#fafbfb;white-space:nowrap}
+.v-candidate td:nth-child(4),.v-error td:nth-child(4){color:var(--accent);font-weight:700}
+.sub{font-size:16px;margin-top:24px}.runs{font-size:14px}
+.foot{color:var(--muted);font-size:12px;padding-top:24px;padding-bottom:32px}
+@media (max-width:640px){.drugs{grid-template-columns:1fr}.nums{grid-template-columns:repeat(3,1fr)}.intro h1{font-size:20px}}
+.summary{color:var(--ink)!important;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}.summary b.red{color:var(--red)}
+.field q.plain{background:none;color:var(--red)}
+.ro-band{background:#fff8e1;border-bottom:1px solid #f1e3b0;font-size:14px;padding:8px 0;color:#5b4a12}
+button:disabled{opacity:.45;cursor:not-allowed}

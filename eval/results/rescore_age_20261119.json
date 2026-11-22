@@ -1,0 +1,114 @@
+{
+ "hard_before": {
+  "all28": {
+   "strict": {
+    "tp": 15,
+    "fp": 0,
+    "fn": 1,
+    "tn": 12
+   },
+   "kept": {
+    "tp": 16,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10
+   }
+  },
+  "holdout": {
+   "strict": {
+    "tp": 7,
+    "fp": 0,
+    "fn": 1,
+    "tn": 6
+   },
+   "kept": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "tn": 6
+   }
+  },
+  "without_ambiguous_25": {
+   "strict": {
+    "tp": 12,
+    "fp": 0,
+    "fn": 1,
+    "tn": 12
+   },
+   "kept": {
+    "tp": 13,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10
+   }
+  },
+  "check_ids": [
+   "H014",
+   "H060",
+   "P146"
+  ]
+ },
+ "hard_after": {
+  "all28": {
+   "strict": {
+    "tp": 15,
+    "fp": 0,
+    "fn": 1,
+    "tn": 12
+   },
+   "kept": {
+    "tp": 16,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10
+   }
+  },
+  "holdout": {
+   "strict": {
+    "tp": 7,
+    "fp": 0,
+    "fn": 1,
+    "tn": 6
+   },
+   "kept": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "tn": 6
+   }
+  },
+  "without_ambiguous_25": {
+   "strict": {
+    "tp": 12,
+    "fp": 0,
+    "fn": 1,
+    "tn": 12
+   },
+   "kept": {
+    "tp": 13,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10
+   }
+  },
+  "check_ids": [
+   "H014",
+   "H060",
+   "P146"
+  ]
+ },
+ "gold60_after_age_rule": {
+  "strict": {
+   "tp": 30,
+   "fp": 0,
+   "fn": 0,
+   "tn": 30
+  },
+  "kept": {
+   "tp": 30,
+   "fp": 6,
+   "fn": 0,
+   "tn": 24
+  }
+ }
+}

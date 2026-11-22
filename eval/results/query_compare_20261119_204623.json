@@ -1,0 +1,90 @@
+{
+ "when": "2026-11-19T20:46:22",
+ "old_run_contribution": {
+  "{d} associated adverse event patient": {
+   "papers": 53,
+   "candidates": 5,
+   "only_this_query": 39,
+   "only_this_query_candidates": 1
+  },
+  "{d} case report": {
+   "papers": 57,
+   "candidates": 34,
+   "only_this_query": 22,
+   "only_this_query_candidates": 7
+  },
+  "{d} toxicity case": {
+   "papers": 57,
+   "candidates": 31,
+   "only_this_query": 28,
+   "only_this_query_candidates": 11
+  },
+  "{d}-induced adverse reaction in a patient": {
+   "papers": 56,
+   "candidates": 22,
+   "only_this_query": 35,
+   "only_this_query_candidates": 9
+  }
+ },
+ "new_queries_unseen_papers": 96,
+ "unseen_with_drug_name": 56,
+ "unseen_verdicts": {
+  "not_case": 49,
+  "candidate": 4,
+  "check": 3
+ },
+ "new_candidates_by_query": {
+  "{d} case series adverse reaction": 3,
+  "{brand} case report": 1
+ },
+ "new_candidates": [
+  {
+   "drug": "semaglutide",
+   "title": "Semaglutide-associated agranulocytosis requiring hospitalisation and granulocyte colony-stimulating factor: a case report.",
+   "url": "https://doi.org/10.1136/ejhpharm-2026-005049",
+   "queries": [
+    "semaglutide case series adverse reaction"
+   ],
+   "verdict": "candidate"
+  },
+  {
+   "drug": "semaglutide",
+   "title": "Case Report: Acute biliary pancreatitis after semaglutide dose escalation in an adolescent with obesity and cholelithiasis",
+   "url": "https://www.frontiersin.org/journals/pediatrics/articles/10.3389/fped.2026.1959617/full",
+   "queries": [
+    "semaglutide case series adverse reaction"
+   ],
+   "verdict": "candidate"
+  },
+  {
+   "drug": "semaglutide",
+   "title": "B52-20 A Broken Heart: Ozempic-Induced Takotsubo Cardiomyopathy",
+   "url": "https://doi.org/10.1093/ajrccm/aamag162.1466",
+   "queries": [
+    "Ozempic case report"
+   ],
+   "verdict": "candidate"
+  },
+  {
+   "drug": "metformin",
+   "title": "Co-prescription of metformin and glucagon-like peptide-1 receptor agonists and metformin-associated lactic acidosis: A case series",
+   "url": "https://doi.org/10.5414/cncs111965",
+   "queries": [
+    "metformin case series adverse reaction"
+   ],
+   "verdict": "candidate"
+  }
+ ],
+ "ledger": {
+  "scholar_calls": 7,
+  "web_calls": 0,
+  "mark_calls": 56,
+  "mark_in_tokens": 43062,
+  "mark_out_tokens": 4516,
+  "errors": 0,
+  "api_seconds": 117.7,
+  "cost_usd": 0.06774
+ },
+ "balance_before": 198.821643,
+ "balance_after": 198.753901
+}

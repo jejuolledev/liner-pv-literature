@@ -1,0 +1,1174 @@
+{
+ "when": "2026-11-19T20:48:20",
+ "no_title": false,
+ "gold": {
+  "n": 60,
+  "tp": 30,
+  "fp": 0,
+  "fn": 0,
+  "tn": 30,
+  "errors": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "quotes": 127,
+  "quotes_verbatim": 127,
+  "quote_match_rate": 1.0,
+  "true_cases_all3_verified": 30,
+  "missed": [],
+  "false_keeps": []
+ },
+ "ledger": {
+  "scholar_calls": 0,
+  "web_calls": 0,
+  "mark_calls": 60,
+  "mark_in_tokens": 52975,
+  "mark_out_tokens": 5881,
+  "errors": 0,
+  "api_seconds": 129.9,
+  "cost_usd": 0.08238
+ },
+ "balance_before": 198.701138,
+ "balance_after": 198.553718,
+ "details": [
+  {
+   "id": "P000",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 45-year-old Ethiopian woman developed bilateral tinnitus",
+    "drug_quote": "3 weeks after starting atorvastatin 40 mg daily",
+    "event_quote": "progressive, symmetric bilateral SNHL",
+    "reason_ko": "개별 환자에서 아토르바스타틴 투여 후 이명과 양측 감각신경성 난청이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P001",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "An 89-year-old male patient with coronary heart disease and lung cancer",
+    "drug_quote": "Atorvastatin was added because the patient failed to reach the target cholesterol concentration.",
+    "event_quote": "Drug-induced myopathy was diagnosed with a probable drug-drug interaction between atorvastatin and almonertinib.",
+    "reason_ko": "89세 남성 환자에게 아토르바스타틴 투여 후 알모네르티닙과의 상호작용으로 근병증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P002",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A man in his 80s",
+    "drug_quote": "had been taking atorvastatin for 2 months",
+    "event_quote": "a diagnosis of rhabdomyolysis due to a potential drug–drug interaction between atorvastatin and methylprednisolone",
+    "reason_ko": "개별 환자에서 아토르바스타틴과 메틸프레드니솔론의 상호작용으로 인한 횡문근융해증이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P003",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "An 81- year- old man with coronary artery disease",
+    "drug_quote": "during long-term atorvastatin therapy",
+    "event_quote": "bilateral lower limb pain suggestive of peripheral neuropathy",
+    "reason_ko": "81세 남성이 아토르바스타틴 장기 복용 중 약물 관련 말초신경병증을 경험한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P004",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 70-year-old male with progressive generalized weakness",
+    "drug_quote": "The patient had recently started high dose atorvastatin",
+    "event_quote": "severe neutropenia, elevated serum creatine kinase, and elevated transaminases",
+    "reason_ko": "개별 환자에게 아토르바스타틴 투여 후 중증 호중구감소증이 발생했으며, 중단 후 호전되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P028",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 70-year-old woman presented to the emergency department (ED) with shortness of breath",
+    "drug_quote": "Four weeks after being prescribed semaglutide",
+    "event_quote": "The patient was diagnosed with drug-induced lupus, likely triggered by semaglutide.",
+    "reason_ko": "세마글루타이드를 처방받은 개별 환자에게 약물 유발 루푸스와 흉막·심낭 삼출이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P030",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 50-year-old man",
+    "drug_quote": "following his first Wegovy dosage",
+    "event_quote": "transient intestinal ischemia",
+    "reason_ko": "50세 남성이 Wegovy 투여 후 일과성 장 허혈을 경험한 개별 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P031",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 58-year-old African American woman with a history of PNEA",
+    "drug_quote": "approximately 13 weeks after initiating semaglutide therapy",
+    "event_quote": "a marked exacerbation of her seizure-like episodes",
+    "reason_ko": "세마글루타이드를 투여받은 개별 환자에게서 발작 유사 증상의 악화가 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P032",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 26-year-old woman who developed SPM",
+    "drug_quote": "the self-administered use of semaglutide purchased online for weight loss",
+    "event_quote": "spontaneous pneumomediastinum (SPM) as a potential consequence of unsupervised semaglutide use",
+    "reason_ko": "세마글루타이드를 사용한 개별 환자에게 약물 관련 자발성 종격동기종이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P034",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 50-year-old man with obesity",
+    "drug_quote": "receiving weekly semaglutide 2.4 mg",
+    "event_quote": "generalized burning dysesthesia and marked asthenia",
+    "reason_ko": "개별 환자가 세마글루타이드를 과다 투여한 후 이상반응을 경험했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P058",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a vulnerable patient with intellectual disability",
+    "drug_quote": "following intentional metformin intoxication in a vulnerable patient",
+    "event_quote": "The patient was initially asymptomatic but shortly became unresponsive and died.",
+    "reason_ko": "지적장애가 있는 개별 환자에서 메트포르민 중독 후 사망이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P060",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 62-year-old man presented at our hospital",
+    "drug_quote": "patient was treated with lifestyle modification and 500 mg metformin once daily",
+    "event_quote": "clinically significant metformin-induced liver injury",
+    "reason_ko": "62세 남성이 메트포르민을 복용한 뒤 약물 유발 간손상을 경험한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P061",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a case of 65-year-old women with known type 2 diabetes mellitus",
+    "drug_quote": "continued to take her usual medications, including metformin",
+    "event_quote": "Metformin-associated lactic acidosis, a rare complication",
+    "reason_ko": "메트포르민을 복용한 개별 환자에게 메트포르민 관련 젖산산증이 발생한 사례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P062",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 51-year-old man who developed generalized targetoid skin lesions",
+    "drug_quote": "after initiating metformin (500 mg twice daily)",
+    "event_quote": "generalized targetoid skin lesions with scaling and mild pruritus",
+    "reason_ko": "메트포르민을 복용한 51세 남성에게 다형홍반으로 판단된 피부 이상반응이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P063",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a patient with previously unrecognized obstructive uropathy",
+    "drug_quote": "while on metformin therapy",
+    "event_quote": "severe euglycemic diabetic ketoacidosis (DKA) with refractory lactic acidosis",
+    "reason_ko": "메트포르민을 복용한 개별 환자에게 메트포르민 관련 젖산산증이 발생한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P064",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "the 68-year-old male patient presented with an atypical chief complaint of dyspnea",
+    "drug_quote": "His metformin level returned several weeks later significantly elevated.",
+    "event_quote": "anion gap metabolic acidosis from an accumulation of lactic acid and acute renal failure",
+    "reason_ko": "메트포르민을 복용한 68세 남성 환자에게 메트포르민 독성과 연관된 젖산산증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P065",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 62-year-old male with a history of type 2 diabetes mellitus and chronic kidney disease",
+    "drug_quote": "A detailed medication history revealed long-term metformin use.",
+    "event_quote": "Laboratory investigations revealed severe metabolic acidosis (pH 7.08), elevated serum lactate (12.5 mmol/L)",
+    "reason_ko": "62세 남성 환자에서 장기 메트포르민 복용과 관련된 젖산산증이 보고되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P086",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a young male patient with clear cell renal cell carcinoma (ccRCC) and suspected pulmonary metastases",
+    "drug_quote": "After 22 cycles of pembrolizumab treatment, the patient developed lethargy and marked metabolic acidosis.",
+    "event_quote": "the patient was diagnosed with immune checkpoint inhibitor-associated FT1DM",
+    "reason_ko": "개별 환자에게 펨브롤리주맙 투여 후 발생한 전격성 제1형 당뇨병을 보고했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P087",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "an 83‐year‐old woman who developed pruritic annular and polycyclic plaques",
+    "drug_quote": "after starting pembrolizumab for oropharyngeal squamous cell carcinoma",
+    "event_quote": "Serology and histopathology were consistent with a diagnosis of SCLE",
+    "reason_ko": "83세 여성에게 펨브롤리주맙 투여 후 약물 관련 아급성 피부 홍반루푸스가 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P090",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 52-year-old man with metastatic superficial spreading melanoma",
+    "drug_quote": "after two years of pembrolizumab therapy",
+    "event_quote": "Pembrolizumab-Induced Choriocapillaritis and Orbital Inflammation",
+    "reason_ko": "펨브롤리주맙 치료를 받은 개별 환자에게 약물 관련 안구 염증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P091",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 76-year-old man with suspected advanced renal cell carcinoma",
+    "drug_quote": "received pembrolizumab as initial treatment",
+    "event_quote": "the patient developed severe thrombocytopenia, bleeding problems, and hemolytic anemia",
+    "reason_ko": "펨브롤리주맙을 투여받은 개별 환자에게 약물 관련 혈전성 혈소판감소성 자반병이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P113",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 2-year-old male child who presented with fever, cough, and respiratory distress",
+    "drug_quote": "following intravenous administration of vancomycin",
+    "event_quote": "the patient developed a hypersensitivity reaction",
+    "reason_ko": "2세 남아에게 반코마이신 정맥 투여 후 과민반응이 발생한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P114",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 64-year-old female patient after right revision knee arthroplasty (RKA)",
+    "drug_quote": "a case of vancomycin-induced DIIHA in a 64-year-old female patient",
+    "event_quote": "vancomycin-induced immune hemolytic anemia",
+    "reason_ko": "64세 여성 환자에게 반코마이신과 관련된 면역성 용혈성 빈혈이 발생한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P118",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 71-year-old female who initially presented with symptoms",
+    "drug_quote": "two minutes after the initiation of vancomycin infusion",
+    "event_quote": "developed an erythematous rash, dizziness, warmth, and pruritus",
+    "reason_ko": "71세 여성에게 반코마이신 주입 직후 발진과 가려움증 등이 발생해 반코마이신 홍조 증후군으로 진단되었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P119",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 59-year-old woman treated for methicillin-resistant Staphylococcus aureus (MRSA) bacteremia",
+    "drug_quote": "her vancomycin level exceeded 80 mg/L",
+    "event_quote": "developed acute heart failure, hypotension, and severe left ventricular systolic dysfunction",
+    "reason_ko": "반코마이신을 투여받은 개별 환자에게 약물 관련 심근병증이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P142",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 66-year-old man receiving long-term amiodarone therapy for atrial fibrillation",
+    "drug_quote": "receiving long-term amiodarone therapy for atrial fibrillation",
+    "event_quote": "amiodarone-induced pneumonitis",
+    "reason_ko": "아미오다론을 장기 복용한 66세 남성에게 아미오다론 유발 폐렴이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P143",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 56-year-old man with arterial hypertension",
+    "drug_quote": "initiation of amiodarone therapy for arrhythmia control",
+    "event_quote": "painless, bilateral sequential visual loss",
+    "reason_ko": "아미오다론 치료를 받은 개별 환자에게 약물 관련 시력 손상이 발생한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P144",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 61-year-old female patient",
+    "drug_quote": "while receiving treatment for non-ST-elevation myocardial infarction with ventricular tachycardia and amiodarone",
+    "event_quote": "we diagnosed the condition as amiodarone-induced pancreatitis",
+    "reason_ko": "아미오다론을 투여받은 개별 환자에게 약물 관련 급성 췌장염이 발생했습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P145",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "A 50-year-old man presented to the emergency department",
+    "drug_quote": "He was treated with intravenous (IV) amiodarone",
+    "event_quote": "he developed encephalopathy and laboratory evidence of ALF",
+    "reason_ko": "50세 남성이 아미오다론 정맥 투여 후 급성 간부전을 겪은 사례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "P168",
+   "case": true,
+   "verdict": "candidate",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": true,
+    "patient_quote": "a 77-year-old female patient with Alzheimer’s disease",
+    "drug_quote": "Levetiracetam was administered, which provoked hemolytic anemia.",
+    "event_quote": "hemolytic anemia",
+    "reason_ko": "77세 여성 환자에게 투여한 레비티라세탐이 용혈성 빈혈을 유발한 증례입니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N005",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "animal_or_lab",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "아토르바스타틴은 선충 모델과 환자 섬유아세포에서 연구되었으며, 약물 관련 이상사례를 겪은 개별 환자는 보고되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N117",
+   "case": false,
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_series",
+    "is_individual_case": false,
+    "patient_quote": "One case received a high vancomycin dose, while the other one was on the standard dose.",
+    "drug_quote": "One case received a high vancomycin dose",
+    "event_quote": "",
+    "reason_ko": "개별 환자에게 반코마이신을 투여했지만, 관련 이상사례는 보고되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N035",
+   "case": false,
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "the case of a 30-year-old male",
+    "drug_quote": "Semaglutide was initiated off-label",
+    "event_quote": "",
+    "reason_ko": "세마글루타이드는 회장루 배출량을 줄이는 치료제로 사용되었으며, 이 약물과 연관된 이상사례는 보고되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N195",
+   "case": false,
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "a 45-year-old woman with recalcitrant perioral dermatitis",
+    "drug_quote": "following treatment with oral isotretinoin",
+    "event_quote": "",
+    "reason_ko": "이소트레티노인은 이상반응의 원인이 아니라 피부염 치료에 효과적이었습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N202",
+   "case": false,
+   "verdict": "check",
+   "model": {
+    "doc_type": "case_report",
+    "is_individual_case": false,
+    "patient_quote": "a child with refractory MC",
+    "drug_quote": "complete clearance with low-dose oral isotretinoin",
+    "event_quote": "",
+    "reason_ko": "이소트레티노인은 소아 환자의 질환을 치료했으며, 약물과 관련된 이상반응은 보고되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "ok",
+    "drug_quote": "ok",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N022",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "neurological adverse events (NAEs) beyond its well-known myopathy",
+    "reason_ko": "FAERS 데이터베이스의 신호 분석으로, 개별 환자 사례가 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N024",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Rhabdomyolysis and drug-induced liver injury were major designated medical events in both databases.",
+    "reason_ko": "이 연구는 이상사례 데이터베이스의 집계 분석으로, 식별 가능한 개별 환자를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N036",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "alopecia or hair loss was reported",
+    "reason_ko": "무작위시험 결과를 종합한 메타분석으로, 세마글루타이드 관련 이상반응을 겪은 개별 환자를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N046",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "non-arteritic anterior ischemic optic neuropathy (NAION)",
+    "reason_ko": "체계적 문헌고찰이며 세마글루타이드 관련 이상사례를 경험한 개별 환자를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N052",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "임상시험과 약물감시 데이터의 집계 결과를 비교한 연구로, 개별 환자 사례가 없습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N056",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "observational_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "patients with obesity treated with semaglutide",
+    "event_quote": "pancreatic events, which were more frequent in the semaglutide group",
+    "reason_ko": "관찰연구의 집단별 이상사례 통계만 제시하며 개별 환자 사례는 없습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N080",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "the top adverse events in this category include lactic acidosis and decreased vitamin B12 levels",
+    "reason_ko": "약물감시 데이터베이스의 집계 결과만 제시하며 개별 환자 사례는 없습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N081",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "combination therapy with a sodium-glucose cotransporter-2 inhibitor (SGLT-2i) and metformin",
+    "event_quote": "diabetic ketoacidosis (n = 3,522)",
+    "reason_ko": "FAERS 보고의 집계 분석이며 개별 환자 사례는 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N100",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "pembrolizumab-induced diabetes mellitus",
+    "reason_ko": "무작위 대조시험을 종합한 메타분석으로, 개별 환자 사례를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N101",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Pembrolizumab-induced myocarditis, although rare",
+    "reason_ko": "기존 문헌을 종합한 서술형 문헌고찰로, 새로운 개별 환자 사례가 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N107",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "observational_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "adult patients (≥18 years) diagnosed with malignant melanoma treated with either nivolumab or pembrolizumab",
+    "event_quote": "immune-related adverse events",
+    "reason_ko": "환자군의 이상반응 발생률을 비교한 코호트 연구로, 개별 환자 사례가 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N136",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "FAERS 자료를 분석한 연구로, 반코마이신 관련 이상사례를 경험한 개별 환자가 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N138",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "pharmacovigilance_database_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Acute kidney injury is the most common",
+    "reason_ko": "FAERS 보고 자료를 분석한 연구로, 개별 환자 사례를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N183",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "레비티라세탐의 이상반응을 검토하는 체계적 문헌고찰로, 새로운 개별 환자 사례가 없습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N189",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "observational_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "100 patients receiving levetiracetam therapy",
+    "event_quote": "changes in social behavior, depression, somnolence, anxiety, and cognitive impairment",
+    "reason_ko": "레베티라세탐 관련 이상반응을 집단 통계로 보고한 관찰연구이며 개별 환자 사례는 제시하지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N218",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "observational_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "patients with acne vulgaris treated with isotretinoin",
+    "event_quote": "Mucocutaneous adverse effects, particularly cheilitis and xerosis",
+    "reason_ko": "후향적 코호트 연구로 이상반응을 집계했지만 개별 환자 사례는 제시하지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N175",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "irritability‑predominant aggressive behavioral adverse events",
+    "reason_ko": "무작위 임상시험을 종합한 메타분석으로, 이상반응을 겪은 개별 환자가 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N164",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "observational_study",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "adverse effect of amiodarone therapy",
+    "event_quote": "Amiodarone-induced thyrotoxicosis",
+    "reason_ko": "아미오다론 관련 부작용을 다룬 후향적 코호트 연구로, 개별 환자 사례는 제시하지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N007",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "receive either atorvastatin (20 mg/day) or placebo for six months",
+    "event_quote": "mild myalgia was more frequent in the intervention group",
+    "reason_ko": "무작위 임상시험에서 근육통 발생률만 집계했으며, 이상사례를 경험한 개별 환자는 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N042",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "subcutaneous semaglutide 1 mg once weekly versus placebo",
+    "event_quote": "",
+    "reason_ko": "무작위 임상시험으로, 세마글루타이드와 연관된 개별 환자의 이상사례를 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N069",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "receive weight-adjusted metformin (250–1000 mg/day) or placebo",
+    "event_quote": "transient appetite loss (13.3%, p = 0.483) and lactic acidosis (26.7%, p = 0.330)",
+    "reason_ko": "임상시험에서 이상반응 발생률만 보고하며 개별 환자 사례는 제시하지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N097",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "무작위 임상시험 계획을 설명하며, 개별 환자의 펨브롤리주맙 관련 이상사례는 보고하지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N120",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "",
+    "reason_ko": "무작위 임상시험의 집단 결과만 보고하며, 반코마이신 관련 이상반응을 겪은 개별 환자는 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "missing"
+   },
+   "error": null
+  },
+  {
+   "id": "N204",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "clinical_trial",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "patients with moderate-to-severe cystic acne were allocated to cumulative isotretinoin doses of 120 or 150 mg/kg",
+    "event_quote": "Adverse events were mild and comparable.",
+    "reason_ko": "무작위 임상시험의 집계 결과일 뿐, 이상반응을 겪은 개별 환자는 제시되지 않았습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "ok",
+    "event_quote": "ok"
+   },
+   "error": null
+  },
+  {
+   "id": "N211",
+   "case": false,
+   "verdict": "not_case",
+   "model": {
+    "doc_type": "review_or_meta_analysis",
+    "is_individual_case": false,
+    "patient_quote": "",
+    "drug_quote": "",
+    "event_quote": "Dry eye disease appears to be a common and potentially serious side effect of isotretinoin.",
+    "reason_ko": "체계적 문헌고찰로, 이소트레티노인 관련 이상반응을 겪은 개별 환자를 새로 제시하지 않습니다."
+   },
+   "checks": {
+    "patient_quote": "missing",
+    "drug_quote": "missing",
+    "event_quote": "ok"
+   },
+   "error": null
+  }
+ ]
+}
